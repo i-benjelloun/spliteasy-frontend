@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../context/auth.context';
-const API_URL = require('../../utils/consts');
+const { API_URL } = require('../../utils/consts');
 
 function SignupPage(props) {
   const [email, setEmail] = useState('');
