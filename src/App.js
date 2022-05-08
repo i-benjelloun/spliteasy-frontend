@@ -2,10 +2,10 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import SignupPage from './pages/auth/SignupPage';
 import LoginPage from './pages/auth/LoginPage';
-import HomePage from './pages/HomePage';
 import Navbar from './components/Navbar/Navbar';
 import IsPrivate from './components/IsPrivate';
 import IsAnonymous from './components/IsAnonymous';
+import GroupsPage from './pages/GroupsPage/GroupsPage';
 
 function App() {
   return (
@@ -13,10 +13,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route
-          path="/"
+          path="/groups"
           element={
             <IsPrivate>
-              <HomePage />
+              <GroupsPage />
             </IsPrivate>
           }
         />

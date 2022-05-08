@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-const API_URL = 'http://localhost:5005/api';
+import React, { useState, useEffect, useCallback } from 'react';
+import { storeToken, removeToken, verifyToken } from '../api/auth';
 
 const AuthContext = React.createContext();
 
@@ -9,46 +8,19 @@ function AuthProviderWrapper(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
-  const storeToken = (token) => {
-    localStorage.setItem('authToken', token);
-  };
+  const authenticateUser = useCallback(async () => {
+    const { isValid, user } = await verifyToken();
 
-  const authenticateUser = async () => {
-    // Get the stored token from the localStorage
-    const storedToken = localStorage.getItem('authToken');
-
-    // If the token exists in the localStorage
-    if (storedToken) {
-      try {
-        // We must send the JWT token in the request's "Authorization" Headers
-        const response = await axios.get(`${API_URL}/auth/verify`, {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        });
-
-        // If the server verifies that JWT token is valid
-        const user = response.data;
-        setIsLoggedIn(true);
-        setIsLoading(false);
-        setUser(user);
-      } catch (err) {
-        // If the server sends an error response (invalid token)
-        // Update state variables
-        setIsLoggedIn(false);
-        setIsLoading(false);
-        setUser(null);
-      }
+    if (isValid) {
+      setIsLoggedIn(true);
+      setIsLoading(false);
+      setUser(user);
     } else {
-      // If the token is not available (or is removed)
       setIsLoggedIn(false);
       setIsLoading(false);
       setUser(null);
     }
-  };
-
-  const removeToken = () => {
-    // Upon logout, remove the token from the localStorage
-    localStorage.removeItem('authToken');
-  };
+  }, []);
 
   const logOutUser = () => {
     // To log out the user, remove the token
@@ -59,7 +31,7 @@ function AuthProviderWrapper(props) {
 
   useEffect(() => {
     authenticateUser();
-  }, []);
+  }, [authenticateUser]);
 
   return (
     <AuthContext.Provider

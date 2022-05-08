@@ -14,8 +14,8 @@ function Navbar() {
   //  depending on the user being logged in or not
   return (
     <nav>
-      <Link to="/">
-        <button>Home</button>
+      <Link to="/groups">
+        <button>Groups</button>
       </Link>
 
       {isLoggedIn && (
