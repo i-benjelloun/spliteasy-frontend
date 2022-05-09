@@ -20,10 +20,10 @@ function LoginPage(props) {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const requestBody = { email, password };
-    const { isLoggedIn, loginErrorMessage } = await login(requestBody);
+    const { isLoggedIn, errorMessage } = await login(requestBody);
 
     if (!isLoggedIn) {
-      setErrorMessage(loginErrorMessage);
+      setErrorMessage(errorMessage);
     } else {
       await authenticateUser();
       navigate('/groups');
