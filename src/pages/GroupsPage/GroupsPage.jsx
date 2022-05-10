@@ -77,9 +77,10 @@ const GroupsPage = () => {
                 return (
                   <GroupCard
                     key={group._id}
+                    groupId={group._id}
                     title={group.title}
                     category={group.category}
-                  ></GroupCard>
+                  />
                 );
               })}
             </>

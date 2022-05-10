@@ -18,6 +18,32 @@ const getGroups = async () => {
   }
 };
 
+// Get groups
+const getGroupById = async (groupId) => {
+  const config = {
+    method: 'get',
+    url: `/groups/${groupId}`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { group },
+    } = await service.request(config);
+
+    if (group) {
+      return {
+        success: true,
+        group: group,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
 // Create group
 const createGroup = async (body) => {
   const config = {
@@ -45,4 +71,4 @@ const createGroup = async (body) => {
   }
 };
 
-export { getGroups, createGroup };
+export { getGroups, createGroup, getGroupById };

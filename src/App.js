@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import IsPrivate from './components/IsPrivate';
 import IsAnonymous from './components/IsAnonymous';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
+import GroupByIdPage from './pages/GroupByIdPage/GroupByIdPage';
 
 function App() {
   return (
@@ -17,6 +18,14 @@ function App() {
           element={
             <IsPrivate>
               <GroupsPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/groups/:groupId"
+          element={
+            <IsPrivate>
+              <GroupByIdPage />
             </IsPrivate>
           }
         />
