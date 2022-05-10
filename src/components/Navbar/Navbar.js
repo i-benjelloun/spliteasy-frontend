@@ -8,32 +8,25 @@ import './Navbar.css';
 function Navbar() {
   // Subscribe to the AuthContext to gain access to
   // the values from AuthContext.Provider `value` prop
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext); // <== ADD
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 
   //  Update the rendering logic to display different content
   //  depending on the user being logged in or not
   return (
-    <nav>
-      <Link to="/">
-        <button>Home</button>
+    <nav className="navbar">
+      <Link to="/groups">
+        <button>Groups</button>
       </Link>
 
-      {isLoggedIn && (
-        <>
-          <button onClick={logOutUser}>Log Out</button>
-          <span>{user && user.name}</span>
-        </>
-      )}
+      {isLoggedIn && <button onClick={logOutUser}>Log Out</button>}
 
       {!isLoggedIn && (
         <>
           <Link to="/signup">
-            {' '}
-            <button>Sign Up</button>{' '}
+            <button>Sign Up</button>
           </Link>
           <Link to="/login">
-            {' '}
-            <button>Log In</button>{' '}
+            <button>Log In</button>
           </Link>
         </>
       )}

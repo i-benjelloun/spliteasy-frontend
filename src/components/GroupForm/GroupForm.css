@@ -1,0 +1,21 @@
+.group-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label-input {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+}
+
+.label {
+  align-self: flex-start;
+  margin-bottom: 0.2rem;
+}
+
+.form-buttons {
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+}

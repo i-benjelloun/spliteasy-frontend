@@ -1,30 +1,32 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { AuthContext } from '../../context/auth.context';
-const { API_URL } = require('../../utils/consts');
+const { login } = require('../../api/auth');
 
 function LoginPage(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const { storeToken, authenticateUser } = useContext(AuthContext);
+  const { isLoggedIn, authenticateUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  if (isLoggedIn) {
+    navigate('/groups');
+  }
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
   const handleLoginSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      const requestBody = { email, password };
-      const response = await axios.post(`${API_URL}/auth/login`, requestBody);
-      storeToken(response.data.authToken);
-      authenticateUser();
-      navigate('/');
-    } catch (err) {
-      const errorDescription = err.response.data.errorMessage;
-      setErrorMessage(errorDescription);
+    e.preventDefault();
+    const requestBody = { email, password };
+    const { isLoggedIn, errorMessage } = await login(requestBody);
+
+    if (!isLoggedIn) {
+      setErrorMessage(errorMessage);
+    } else {
+      await authenticateUser();
+      navigate('/groups');
     }
   };
 

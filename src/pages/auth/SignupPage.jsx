@@ -1,8 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { AuthContext } from '../../context/auth.context';
-const { API_URL } = require('../../utils/consts');
+const { signup, login } = require('../../api/auth');
 
 function SignupPage(props) {
   const [email, setEmail] = useState('');
@@ -10,7 +9,6 @@ function SignupPage(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -19,27 +17,15 @@ function SignupPage(props) {
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLastName(e.target.value);
   const handleSignupSubmit = async (e) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
+    // Sign Up
+    const requestBody = { email, password, firstName, lastName };
+    const { isSignedUp, errorMessage } = await signup(requestBody);
 
-      // Sign Up
-      const requestBody = { email, password, firstName, lastName };
-      const signupResponse = await axios.post(
-        `${API_URL}/auth/signup`,
-        requestBody
-      );
-
-      const loginResponse = await axios.post(`${API_URL}/auth/login`, {
-        email,
-        password,
-      });
-
-      storeToken(loginResponse.data.authToken);
-      authenticateUser();
-      navigate('/');
-    } catch (err) {
-      const errorDescription = err.response.data.errorMessage;
-      setErrorMessage(errorDescription);
+    if (!isSignedUp) {
+      setErrorMessage(errorMessage);
+    } else {
+      navigate('/login');
     }
   };
 

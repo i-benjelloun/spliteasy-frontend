@@ -1,0 +1,7 @@
+.create-group-btn {
+  border: none;
+  background-color: transparent;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}

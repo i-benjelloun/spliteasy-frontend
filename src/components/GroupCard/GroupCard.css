@@ -1,0 +1,6 @@
+.group-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px black solid;
+}
