@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { getUserInfo } from '../../api/userInfo';
 
-const GroupMembersInput = ({ members, handleMembersChange }) => {
+const GroupMembersInput = ({ handleMembersChange }) => {
   const [userInfo, setUserInfo] = useState();
 
   const getUserData = async () => {
@@ -17,8 +17,8 @@ const GroupMembersInput = ({ members, handleMembersChange }) => {
 
   // Get users friends
   const options = userInfo?.friends.map((friend) => ({
-    value: friend._id,
     label: friend.firstName,
+    value: friend.email,
   }));
 
   return (
@@ -26,7 +26,7 @@ const GroupMembersInput = ({ members, handleMembersChange }) => {
       <label className="label" htmlFor="members">
         Members
       </label>
-      <Select
+      <CreatableSelect
         closeMenuOnSelect={false}
         onChange={handleMembersChange}
         options={options}
