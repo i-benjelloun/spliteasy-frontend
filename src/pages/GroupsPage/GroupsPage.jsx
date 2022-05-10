@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { getGroups } from '../../api/groups';
 import GroupCard from '../../components/GroupCard/GroupCard';
+import GroupForm from '../../components/GroupForm/GroupForm';
 import './GroupsPage.css';
 
 const GroupsPage = () => {
   const [groups, setGroups] = useState([]);
   const [archivedFilter, setArchivedFilter] = useState(false);
   const [filteredGroups, setFilteredGroups] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isShowingForm, setIsShowingForm] = useState(false);
 
   const getGroupsData = async () => {
     const groups = await getGroups();
     setGroups(groups);
+    setIsLoading(false);
   };
 
   // Get groups data
@@ -42,35 +46,53 @@ const GroupsPage = () => {
     setArchivedFilter(!archivedFilter);
   };
 
+  // Handle create group button
+  const handleCreateGroupBtn = () => {
+    setIsShowingForm(true);
+  };
+
   return (
-    <section className="groups-page">
-      <h1>Groups</h1>
-
-      {groups.length > 0 && (
-        <>
-          <button onClick={handleArchivedFilter}>
-            {archivedFilter
-              ? `Active (${groupsLeft})`
-              : `Archived (${groupsLeft})`}
-          </button>
-          {filteredGroups.map((group) => {
-            return (
-              <GroupCard
-                key={group._id}
-                title={group.title}
-                category={group.category}
-              ></GroupCard>
-            );
-          })}
-        </>
+    <>
+      {isShowingForm && (
+        <GroupForm
+          status={'create'}
+          setIsShowingForm={setIsShowingForm}
+          setGroups={setGroups}
+        />
       )}
+      {!isShowingForm && (
+        <section className="groups-page">
+          <h1>Groups</h1>
 
-      {groups.length === 0 && <h3>You have no groups yet</h3>}
+          {isLoading && <i className="fas fa-spinner fa-spin fa-3x"></i>}
 
-      <button className="create-group-btn">
-        <i className="fa-solid fa-circle-plus fa-4x"></i>
-      </button>
-    </section>
+          {!isLoading && groups.length > 0 && (
+            <>
+              <button onClick={handleArchivedFilter}>
+                {archivedFilter
+                  ? `Active (${groupsLeft})`
+                  : `Archived (${groupsLeft})`}
+              </button>
+              {filteredGroups.map((group) => {
+                return (
+                  <GroupCard
+                    key={group._id}
+                    title={group.title}
+                    category={group.category}
+                  ></GroupCard>
+                );
+              })}
+            </>
+          )}
+
+          {!isLoading && groups.length === 0 && <h3>You have no groups yet</h3>}
+
+          <button onClick={handleCreateGroupBtn} className="create-group-btn">
+            <i className="fa-solid fa-circle-plus fa-4x"></i>
+          </button>
+        </section>
+      )}
+    </>
   );
 };
 

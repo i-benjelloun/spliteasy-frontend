@@ -9,7 +9,6 @@ function SignupPage(props) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 

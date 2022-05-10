@@ -2,7 +2,7 @@ import service from './service';
 import { getHeadersWithAuth } from './auth';
 
 // Get groups
-const getGroups = async (id) => {
+const getGroups = async () => {
   const config = {
     method: 'get',
     url: '/groups',
@@ -18,4 +18,31 @@ const getGroups = async (id) => {
   }
 };
 
-export { getGroups };
+// Create group
+const createGroup = async (body) => {
+  const config = {
+    method: 'post',
+    url: '/groups',
+    headers: getHeadersWithAuth(),
+    data: body,
+  };
+  try {
+    const {
+      data: { createdGroup },
+    } = await service.request(config);
+
+    if (createdGroup) {
+      return {
+        success: true,
+        createdGroup: createdGroup,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+export { getGroups, createGroup };
