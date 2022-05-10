@@ -1,7 +1,9 @@
-.create-group-btn {
-  border: none;
-  background-color: transparent;
+.create-group {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+}
+
+.groups-page {
+  padding-top: 1.5rem;
 }

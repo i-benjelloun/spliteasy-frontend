@@ -76,7 +76,9 @@ function SignupPage(props) {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p>Already have account ?</p>
-      <Link to={'/login'}>Log In</Link>
+      <Link className="text-link" to={'/login'}>
+        Log In
+      </Link>
     </div>
   );
 }

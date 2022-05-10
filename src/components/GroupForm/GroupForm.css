@@ -1,3 +1,7 @@
+.group-form-container {
+  padding-top: 1.5rem;
+}
+
 .group-form {
   display: flex;
   flex-direction: column;

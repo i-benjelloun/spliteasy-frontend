@@ -40,7 +40,7 @@ const GroupForm = ({ status, setIsShowingForm, setGroups }) => {
   };
 
   return (
-    <div>
+    <div className="group-form-container">
       <h1>{status === 'create' ? 'Create group' : 'Edit group'}</h1>
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
