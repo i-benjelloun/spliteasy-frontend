@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import ExpenseAmountInput from '../ExpenseAmountInput/ExpenseAmountInput';
 import ExpenseCategoryInput from '../ExpenseCategoryInput/ExpenseCategoryInput';
+import ExpenseDateInput from '../ExpenseDateInput/ExpenseDateInput';
 import ExpensePaidByInput from '../ExpensePaidByInput/ExpensePaidByInput';
 import ExpenseTitleInput from '../ExpenseTitleInput/ExpenseTitleInput';
 
@@ -23,6 +25,21 @@ const ExpenseForm = ({ group }) => {
     setCategory(e.value);
   };
 
+  const handleDateChange = (e) => {
+    // setDate(e.target.valueAsDate);
+    setDate(e);
+  };
+
+  const handleExpenseAmountChange = (e) => {
+    const amount = e.target.value;
+    if (
+      amount.indexOf('.') === -1 ||
+      amount.indexOf('.') >= amount.length - 3
+    ) {
+      return setExpenseAmount(amount);
+    }
+  };
+
   return (
     <div className="group-form-container">
       <h1>Expense form</h1>
@@ -35,6 +52,12 @@ const ExpenseForm = ({ group }) => {
         />
 
         <ExpenseCategoryInput handleCategoryChange={handleCategoryChange} />
+
+        <ExpenseAmountInput
+          handleExpenseAmountChange={handleExpenseAmountChange}
+        />
+
+        <ExpenseDateInput date={date} handleDateChange={handleDateChange} />
       </form>
     </div>
   );
