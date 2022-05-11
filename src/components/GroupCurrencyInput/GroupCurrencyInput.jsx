@@ -11,7 +11,7 @@ const GroupCurrencyInput = ({ handleCurrencyChange }) => {
 
   return (
     <div className="form-label-input">
-      <label className="label" htmlFor="currency">
+      <label className="form-label" htmlFor="currency">
         Currency
       </label>
       <Select

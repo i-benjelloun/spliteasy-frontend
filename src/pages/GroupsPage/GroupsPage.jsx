@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { getGroups } from '../../api/groups';
 import GroupCard from '../../components/GroupCard/GroupCard';
 import GroupForm from '../../components/GroupForm/GroupForm';
+import Navbar from '../../components/Navbar/Navbar';
 import './GroupsPage.css';
 
-const GroupsPage = () => {
+const GroupsPage = (props) => {
   const [groups, setGroups] = useState([]);
   const [archivedFilter, setArchivedFilter] = useState(false);
   const [filteredGroups, setFilteredGroups] = useState([]);
@@ -20,39 +21,16 @@ const GroupsPage = () => {
   // Get groups data
   useEffect(() => {
     getGroupsData();
-  }, []);
-
-  // Filter groups based on archived status
-  useEffect(() => {
-    if (groups.length > 0) {
-      let filteredGroups = [];
-      if (archivedFilter) {
-        filteredGroups = groups.filter((group) => {
-          return group.isArchived === true;
-        });
-      } else {
-        filteredGroups = groups.filter((group) => {
-          return group.isArchived === false;
-        });
-      }
-      setFilteredGroups(filteredGroups);
-    }
-  }, [groups, archivedFilter]);
-
-  const groupsLeft = (groups.length || 0) - (filteredGroups.length || 0);
-
-  // Handle archived filter
-  const handleArchivedFilter = () => {
-    setArchivedFilter(!archivedFilter);
-  };
+  }, [isShowingForm]);
 
   // Handle create group button
-  const handleCreateGroupBtn = () => {
+  const handleCreateBtn = () => {
     setIsShowingForm(true);
   };
 
   return (
     <>
+      <Navbar />
       {isShowingForm && (
         <GroupForm
           status={'create'}
@@ -64,22 +42,22 @@ const GroupsPage = () => {
         <section className="groups-page">
           <h1>Groups</h1>
 
-          {isLoading && <i className="fas fa-spinner fa-spin fa-3x"></i>}
+          {isLoading && (
+            <div className="spinner">
+              <i className="fas fa-spinner fa-spin fa-3x"></i>
+            </div>
+          )}
 
           {!isLoading && groups.length > 0 && (
             <>
-              <button onClick={handleArchivedFilter}>
-                {archivedFilter
-                  ? `Active (${groupsLeft})`
-                  : `Archived (${groupsLeft})`}
-              </button>
-              {filteredGroups.map((group) => {
+              {groups.map((group) => {
                 return (
                   <GroupCard
                     key={group._id}
+                    groupId={group._id}
                     title={group.title}
                     category={group.category}
-                  ></GroupCard>
+                  />
                 );
               })}
             </>
@@ -87,7 +65,7 @@ const GroupsPage = () => {
 
           {!isLoading && groups.length === 0 && <h3>You have no groups yet</h3>}
 
-          <button onClick={handleCreateGroupBtn} className="create-group-btn">
+          <button onClick={handleCreateBtn} className="create-btn create-group">
             <i className="fa-solid fa-circle-plus fa-4x"></i>
           </button>
         </section>

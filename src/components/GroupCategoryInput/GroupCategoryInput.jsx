@@ -11,7 +11,7 @@ const GroupCategoryInput = ({ handleCategoryChange }) => {
 
   return (
     <div className="form-label-input">
-      <label className="label" htmlFor="category">
+      <label className="form-label" htmlFor="category">
         Category
       </label>
       <Select

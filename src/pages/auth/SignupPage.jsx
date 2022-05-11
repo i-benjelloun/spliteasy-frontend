@@ -1,9 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/auth.context';
-const { signup, login } = require('../../api/auth');
+const { signup } = require('../../api/auth');
 
-function SignupPage(props) {
+function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -34,49 +33,65 @@ function SignupPage(props) {
       <h1>Sign Up</h1>
 
       <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmail}
-          required
-        />
+        <div className="form-label-input">
+          <label className="form-label">Email</label>
+          <input
+            className="form-input"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleEmail}
+            required
+          />
+        </div>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-          required
-        />
+        <div className="form-label-input">
+          <label className="form-label">Password</label>
+          <input
+            className="form-input"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+            required
+          />
+        </div>
 
-        <label>First Name:</label>
-        <input
-          type="text"
-          name="firstName"
-          value={firstName}
-          onChange={handleFirstName}
-          required
-        />
+        <div className="form-label-input">
+          <label className="form-label">First Name</label>
+          <input
+            className="form-input"
+            type="text"
+            name="firstName"
+            value={firstName}
+            onChange={handleFirstName}
+            required
+          />
+        </div>
 
-        <label>Last Name:</label>
-        <input
-          type="text"
-          name="lastName"
-          value={lastName}
-          onChange={handleLastName}
-          required
-        />
+        <div className="form-label-input">
+          <label className="form-label">Last Name</label>
+          <input
+            className="form-input"
+            type="text"
+            name="lastName"
+            value={lastName}
+            onChange={handleLastName}
+            required
+          />
+        </div>
 
-        <button type="submit">Sign Up</button>
+        <button className="btn" type="submit">
+          Sign Up
+        </button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p>Already have account ?</p>
-      <Link to={'/login'}>Log In</Link>
+      <Link className="text-link" to={'/login'}>
+        Log In
+      </Link>
     </div>
   );
 }

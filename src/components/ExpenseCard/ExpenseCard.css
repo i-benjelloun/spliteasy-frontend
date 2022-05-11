@@ -1,0 +1,13 @@
+.expense-card {
+  border-bottom: 1px black solid;
+}
+
+.expense-card-subdiv {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+.expense-card-subdiv * {
+  margin: 0;
+}

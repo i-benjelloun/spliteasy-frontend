@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 const { login } = require('../../api/auth');
 
-function LoginPage(props) {
+function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -38,30 +38,40 @@ function LoginPage(props) {
       <h1>Log In</h1>
 
       <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmail}
-          required
-        />
+        <div className="form-label-input">
+          <label>Email</label>
+          <input
+            className="form-input"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleEmail}
+            required
+          />
+        </div>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-          required
-        />
+        <div className="form-label-input">
+          <label>Password</label>
+          <input
+            className="form-input"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+            required
+          />
+        </div>
 
-        <button type="submit">Log In</button>
+        <button className="btn" type="submit">
+          Log In
+        </button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p>Don't have an account yet ?</p>
-      <Link to={'/signup'}> Sign Up</Link>
+      <Link className="text-link" to={'/signup'}>
+        Sign Up
+      </Link>
     </div>
   );
 }

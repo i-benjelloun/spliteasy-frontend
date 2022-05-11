@@ -1,17 +1,36 @@
-import React, { useState } from 'react';
-import { createGroup } from '../../api/groups';
+import React, { useContext, useState } from 'react';
+import { createGroup, deleteGroup, updateGroup } from '../../api/groups';
 import GroupCategoryInput from '../GroupCategoryInput/GroupCategoryInput';
 import GroupCurrencyInput from '../GroupCurrencyInput/GroupCurrencyInput';
 import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
 import GroupTitleInput from '../GroupTitleInput/GroupTitleInput';
 import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from '../../context/auth.context';
 import './GroupForm.css';
+import { useNavigate } from 'react-router-dom';
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
-const GroupForm = ({ status, setIsShowingForm, setGroups }) => {
-  const [title, setTitle] = useState('');
+const GroupForm = ({
+  status,
+  setIsShowingForm,
+  setGroups,
+  setGroup,
+  group,
+}) => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
   const [category, setCategory] = useState('');
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState(
+    status === 'edit'
+      ? group?.members
+          .map((member) => member.email)
+          .filter((member) => {
+            return member !== user.email;
+          })
+      : []
+  );
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -25,45 +44,96 @@ const GroupForm = ({ status, setIsShowingForm, setGroups }) => {
   const handleMembersChange = (e) => {
     setMembers(e.map((member) => member.value));
   };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const body = { title, currency, category, members };
-    const { success, createdGroup, errorMessage } = await createGroup(body);
+    if (status === 'create') {
+      const { success, createdGroup, errorMessage } = await createGroup({
+        title: capitalizeFirstLetter(title),
+        currency,
+        category,
+        members,
+      });
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        setGroups((prev) => {
+          return [...prev, createdGroup];
+        });
+        setIsShowingForm(false);
+      }
+    }
+    if (status === 'edit') {
+      const { success, updatedGroup, errorMessage } = await updateGroup(
+        group._id.toString(),
+        { title: capitalizeFirstLetter(title), members }
+      );
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        setGroup((prev) => {
+          return {
+            ...prev,
+            title: updatedGroup.title,
+            members: updatedGroup.members,
+          };
+        });
+        setIsShowingForm(false);
+      }
+    }
+  };
+
+  const handleDeleteBtn = async (e) => {
+    e.preventDefault();
+    const { success, errorMessage } = await deleteGroup(group?._id.toString());
     if (!success) {
       toast.error(errorMessage);
     } else {
-      setGroups((prev) => {
-        return [...prev, createdGroup];
-      });
-      setIsShowingForm(false);
+      navigate('/groups');
     }
   };
 
   return (
-    <div>
+    <div className="group-form-container">
       <h1>{status === 'create' ? 'Create group' : 'Edit group'}</h1>
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
 
-        <GroupCurrencyInput
-          currency={currency}
-          handleCurrencyChange={handleCurrencyChange}
-        />
-        <GroupCategoryInput
-          category={category}
-          handleCategoryChange={handleCategoryChange}
-        />
+        {status === 'create' && (
+          <>
+            <GroupCurrencyInput
+              currency={currency}
+              handleCurrencyChange={handleCurrencyChange}
+            />
+            <GroupCategoryInput
+              category={category}
+              handleCategoryChange={handleCategoryChange}
+            />
+          </>
+        )}
 
         <GroupMembersInput
-          members={members}
           handleMembersChange={handleMembersChange}
+          defaultMembers={group?.members}
+          status={status}
         />
         <div className="form-buttons">
-          <button type="submit">Submit</button>
-          <button type="button" onClick={() => setIsShowingForm(false)}>
+          <button className="btn" type="submit">
+            Submit
+          </button>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => setIsShowingForm(false)}
+          >
             Cancel
           </button>
         </div>
+        {status === 'edit' && (
+          <button onClick={handleDeleteBtn} className="btn" type="button">
+            {'Delete'}
+          </button>
+        )}
       </form>
 
       <Toaster position="bottom-center" reverseOrder={false} />

@@ -1,0 +1,21 @@
+.group-header ul {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  justify-content: center;
+}
+
+.group-header li {
+  padding: 0 8px;
+  border-right: 1px solid black;
+  font-weight: bold;
+}
+
+.group-header ul > li:last-child {
+  border: none;
+}
+
+.group-header-btns {
+  display: flex;
+  justify-content: space-between;
+}
