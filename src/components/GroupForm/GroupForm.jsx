@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
 import './GroupForm.css';
 import { useNavigate } from 'react-router-dom';
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 const GroupForm = ({
   status,
@@ -46,9 +47,13 @@ const GroupForm = ({
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const body = { title, currency, category, members };
     if (status === 'create') {
-      const { success, createdGroup, errorMessage } = await createGroup(body);
+      const { success, createdGroup, errorMessage } = await createGroup({
+        title: capitalizeFirstLetter(title),
+        currency,
+        category,
+        members,
+      });
       if (!success) {
         toast.error(errorMessage);
       } else {
@@ -61,7 +66,7 @@ const GroupForm = ({
     if (status === 'edit') {
       const { success, updatedGroup, errorMessage } = await updateGroup(
         group._id.toString(),
-        { title, members }
+        { title: capitalizeFirstLetter(title), members }
       );
       if (!success) {
         toast.error(errorMessage);
