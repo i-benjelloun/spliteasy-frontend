@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ExpenseCategoryInput from '../ExpenseCategoryInput/ExpenseCategoryInput';
 import ExpensePaidByInput from '../ExpensePaidByInput/ExpensePaidByInput';
 import ExpenseTitleInput from '../ExpenseTitleInput/ExpenseTitleInput';
 
@@ -18,15 +19,22 @@ const ExpenseForm = ({ group }) => {
     setPaidBy(e.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.value);
+  };
+
   return (
     <div className="group-form-container">
       <h1>Expense form</h1>
       <form className="group-form">
         <ExpenseTitleInput handleTitleChange={handleTitleChange} />
+
         <ExpensePaidByInput
           handlePaidByChange={handlePaidByChange}
           members={group?.members}
         />
+
+        <ExpenseCategoryInput handleCategoryChange={handleCategoryChange} />
       </form>
     </div>
   );
