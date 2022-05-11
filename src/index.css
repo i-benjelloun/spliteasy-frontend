@@ -12,6 +12,7 @@ body {
 
 .btn {
   height: 1.5rem;
+  width: 6rem;
 }
 
 h1 {
@@ -29,6 +30,18 @@ h1 {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  columns: inherit;
+}
+
+.spinner i {
+  color: black;
 }
 
 code {

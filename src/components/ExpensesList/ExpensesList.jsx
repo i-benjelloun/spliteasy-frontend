@@ -24,6 +24,7 @@ const ExpensesList = ({ groupId, currency }) => {
 
   return (
     <div className="expenses-list">
+      {expenses?.length === 0 && <p>There are no expenses in this group</p>}
       {expenses?.map((expense) => (
         <ExpenseCard key={expense._id} expense={expense} currency={currency} />
       ))}

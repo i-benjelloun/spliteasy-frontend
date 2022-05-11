@@ -5,7 +5,7 @@ import GroupForm from '../../components/GroupForm/GroupForm';
 import Navbar from '../../components/Navbar/Navbar';
 import './GroupsPage.css';
 
-const GroupsPage = () => {
+const GroupsPage = (props) => {
   const [groups, setGroups] = useState([]);
   const [archivedFilter, setArchivedFilter] = useState(false);
   const [filteredGroups, setFilteredGroups] = useState([]);
@@ -38,7 +38,7 @@ const GroupsPage = () => {
       }
       setFilteredGroups(filteredGroups);
     }
-  }, [groups, archivedFilter]);
+  }, [groups, archivedFilter, isShowingForm]);
 
   const groupsLeft = (groups.length || 0) - (filteredGroups.length || 0);
 
@@ -66,11 +66,15 @@ const GroupsPage = () => {
         <section className="groups-page">
           <h1>Groups</h1>
 
-          {isLoading && <i className="fas fa-spinner fa-spin fa-3x"></i>}
+          {isLoading && (
+            <div className="spinner">
+              <i className="fas fa-spinner fa-spin fa-3x"></i>
+            </div>
+          )}
 
           {!isLoading && groups.length > 0 && (
             <>
-              <button onClick={handleArchivedFilter}>
+              <button className="btn" onClick={handleArchivedFilter}>
                 {archivedFilter
                   ? `Active (${groupsLeft})`
                   : `Archived (${groupsLeft})`}

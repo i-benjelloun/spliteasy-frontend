@@ -71,4 +71,30 @@ const createGroup = async (body) => {
   }
 };
 
-export { getGroups, createGroup, getGroupById };
+const updateGroup = async (groupId, body) => {
+  const config = {
+    method: 'patch',
+    url: `/groups/${groupId}`,
+    headers: getHeadersWithAuth(),
+    data: body,
+  };
+  try {
+    const {
+      data: { updatedGroup },
+    } = await service.request(config);
+
+    if (updatedGroup) {
+      return {
+        success: true,
+        updatedGroup: updatedGroup,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+export { getGroups, createGroup, getGroupById, updateGroup };
