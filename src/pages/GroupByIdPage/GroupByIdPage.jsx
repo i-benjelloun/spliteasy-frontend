@@ -45,6 +45,9 @@ const GroupByIdPage = () => {
               setIsShowingForm={setIsShowingForm}
             />
             <ExpensesList groupId={groupId} currency={group?.currency} />
+            <button className="create-btn create-expense">
+              <i className="fa-solid fa-circle-plus fa-4x"></i>
+            </button>
           </>
         )}
 
@@ -57,9 +60,6 @@ const GroupByIdPage = () => {
           />
         )}
       </div>
-      <button className="create-btn create-expense">
-        <i className="fa-solid fa-circle-plus fa-4x"></i>
-      </button>
     </>
   );
 };

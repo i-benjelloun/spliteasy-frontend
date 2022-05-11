@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { updateGroup } from '../../api/groups';
 import toast, { Toaster } from 'react-hot-toast';
 import './GroupHeader.css';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
 
 const GroupHeader = ({ group, setIsShowingForm, setGroup }) => {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // Handle edit button
@@ -40,11 +42,13 @@ const GroupHeader = ({ group, setIsShowingForm, setGroup }) => {
         ))}
       </ul>
       <div className="group-header-btns">
-        <button onClick={handleEditBtn} className="btn" type="button">
-          Edit
-        </button>
+        {user._id === group?.owner._id.toString() && (
+          <button onClick={handleEditBtn} className="btn" type="button">
+            Edit
+          </button>
+        )}
         <button onClick={handleArchiveBtn} className="btn" type="button">
-          {group?.isArchived ? 'Unarchive' : 'Archive'}
+          {group?.isArchived ? 'Restore' : 'Archive'}
         </button>
       </div>
       <Toaster position="bottom-center" reverseOrder={false} />

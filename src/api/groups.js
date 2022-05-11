@@ -97,4 +97,29 @@ const updateGroup = async (groupId, body) => {
   }
 };
 
-export { getGroups, createGroup, getGroupById, updateGroup };
+const deleteGroup = async (groupId) => {
+  const config = {
+    method: 'delete',
+    url: `/groups/${groupId}`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { deletedGroup },
+    } = await service.request(config);
+
+    if (deletedGroup) {
+      return {
+        success: true,
+        deletedGroup: deletedGroup,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+export { getGroups, createGroup, getGroupById, updateGroup, deleteGroup };

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { createGroup, updateGroup } from '../../api/groups';
+import { createGroup, deleteGroup, updateGroup } from '../../api/groups';
 import GroupCategoryInput from '../GroupCategoryInput/GroupCategoryInput';
 import GroupCurrencyInput from '../GroupCurrencyInput/GroupCurrencyInput';
 import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
@@ -7,6 +7,7 @@ import GroupTitleInput from '../GroupTitleInput/GroupTitleInput';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
 import './GroupForm.css';
+import { useNavigate } from 'react-router-dom';
 
 const GroupForm = ({
   status,
@@ -15,6 +16,7 @@ const GroupForm = ({
   setGroup,
   group,
 }) => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
@@ -76,6 +78,16 @@ const GroupForm = ({
     }
   };
 
+  const handleDeleteBtn = async (e) => {
+    e.preventDefault();
+    const { success, errorMessage } = await deleteGroup(group?._id.toString());
+    if (!success) {
+      toast.error(errorMessage);
+    } else {
+      navigate('/groups');
+    }
+  };
+
   return (
     <div className="group-form-container">
       <h1>{status === 'create' ? 'Create group' : 'Edit group'}</h1>
@@ -112,6 +124,11 @@ const GroupForm = ({
             Cancel
           </button>
         </div>
+        {status === 'edit' && (
+          <button onClick={handleDeleteBtn} className="btn" type="button">
+            {'Delete'}
+          </button>
+        )}
       </form>
 
       <Toaster position="bottom-center" reverseOrder={false} />
