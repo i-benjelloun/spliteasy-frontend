@@ -39,7 +39,11 @@ const GroupByIdPage = () => {
       <div className="group-by-id-page">
         {!isShowingForm && (
           <>
-            <GroupHeader group={group} setIsShowingForm={setIsShowingForm} />
+            <GroupHeader
+              group={group}
+              setGroup={setGroup}
+              setIsShowingForm={setIsShowingForm}
+            />
             <ExpensesList groupId={groupId} currency={group?.currency} />
           </>
         )}
