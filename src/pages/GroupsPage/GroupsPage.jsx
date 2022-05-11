@@ -21,31 +21,7 @@ const GroupsPage = (props) => {
   // Get groups data
   useEffect(() => {
     getGroupsData();
-  }, []);
-
-  // Filter groups based on archived status
-  useEffect(() => {
-    if (groups.length > 0) {
-      let filteredGroups = [];
-      if (archivedFilter) {
-        filteredGroups = groups.filter((group) => {
-          return group.isArchived === true;
-        });
-      } else {
-        filteredGroups = groups.filter((group) => {
-          return group.isArchived === false;
-        });
-      }
-      setFilteredGroups(filteredGroups);
-    }
-  }, [groups, archivedFilter, isShowingForm]);
-
-  const groupsLeft = (groups.length || 0) - (filteredGroups.length || 0);
-
-  // Handle archived filter
-  const handleArchivedFilter = () => {
-    setArchivedFilter(!archivedFilter);
-  };
+  }, [isShowingForm]);
 
   // Handle create group button
   const handleCreateBtn = () => {
@@ -74,12 +50,7 @@ const GroupsPage = (props) => {
 
           {!isLoading && groups.length > 0 && (
             <>
-              <button className="btn" onClick={handleArchivedFilter}>
-                {archivedFilter
-                  ? `Active (${groupsLeft})`
-                  : `Archived (${groupsLeft})`}
-              </button>
-              {filteredGroups.map((group) => {
+              {groups.map((group) => {
                 return (
                   <GroupCard
                     key={group._id}
