@@ -34,7 +34,7 @@ const GroupMembersInput = ({ handleMembersChange, defaultMembers, status }) => {
 
   return (
     <div className="form-label-input">
-      <label className="label" htmlFor="members">
+      <label className="form-label" htmlFor="members">
         Members
       </label>
       <CreatableSelect

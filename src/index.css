@@ -44,6 +44,18 @@ h1 {
   color: black;
 }
 
+.form-input {
+  border: 1px #cccccc solid;
+  border-radius: 4px;
+  min-height: 36px;
+  padding: 0 0.5rem;
+}
+
+.form-label {
+  align-self: flex-start;
+  margin-bottom: 0.2rem;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -38,25 +38,33 @@ function LoginPage() {
       <h1>Log In</h1>
 
       <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleEmail}
-          required
-        />
+        <div className="form-label-input">
+          <label>Email</label>
+          <input
+            className="form-input"
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleEmail}
+            required
+          />
+        </div>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-          required
-        />
+        <div className="form-label-input">
+          <label>Password</label>
+          <input
+            className="form-input"
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePassword}
+            required
+          />
+        </div>
 
-        <button type="submit">Log In</button>
+        <button className="btn" type="submit">
+          Log In
+        </button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
