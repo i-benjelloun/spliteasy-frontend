@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ExpenseAmountInput from '../ExpenseAmountInput/ExpenseAmountInput';
 import ExpenseCategoryInput from '../ExpenseCategoryInput/ExpenseCategoryInput';
 import ExpenseDateInput from '../ExpenseDateInput/ExpenseDateInput';
@@ -6,14 +6,27 @@ import ExpensePaidByInput from '../ExpensePaidByInput/ExpensePaidByInput';
 import ExpenseSharesInput from '../SharesInputs/SharesInputs';
 import ExpenseTitleInput from '../ExpenseTitleInput/ExpenseTitleInput';
 import { validateExpense } from '../../utils/validateExpense';
+import toast, { Toaster } from 'react-hot-toast';
+import { createExpense } from '../../api/expenses';
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+import { AuthContext } from '../../context/auth.context';
 
-const ExpenseForm = ({ group }) => {
+const ExpenseForm = ({ group, setIsShowingExpenseForm }) => {
+  const { user } = useContext(AuthContext);
   const [title, setTitle] = useState('');
-  const [paid_by, setPaidBy] = useState('');
+  const [paid_by, setPaidBy] = useState(user._id);
   const [category, setCategory] = useState('Other');
   const [expense_amount, setExpenseAmount] = useState(0);
   const [shares, setShares] = useState([]);
   const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const shares = group?.members.map((member) => ({
+      shared_with: member._id,
+      share_amount: 0,
+    }));
+    setShares(shares);
+  }, []);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -41,19 +54,31 @@ const ExpenseForm = ({ group }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateExpense(expense_amount, shares);
-    console.log(isValid);
-  };
+    if (!isValid) {
+      return toast.error('Total shares must add up to expense amount');
+    } else {
+      const { success, errorMessage } = await createExpense(
+        group._id.toString(),
+        {
+          title: capitalizeFirstLetter(title),
+          paid_by,
+          category,
+          expense_amount,
+          shares,
+          date,
+        }
+      );
 
-  useEffect(() => {
-    const shares = group?.members.map((member) => ({
-      shared_with: member._id,
-      share_amount: 0,
-    }));
-    setShares(shares);
-  }, []);
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        setIsShowingExpenseForm(false);
+      }
+    }
+  };
 
   return (
     <div className="group-form-container">
@@ -81,11 +106,20 @@ const ExpenseForm = ({ group }) => {
           currency={group?.currency}
           shares={shares}
         />
-
-        <button className="btn" type="submit">
-          Save
-        </button>
+        <div className="form-buttons">
+          <button className="btn" type="submit">
+            Save
+          </button>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => setIsShowingExpenseForm(false)}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 };

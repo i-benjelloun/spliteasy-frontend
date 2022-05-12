@@ -27,4 +27,30 @@ const getExpenses = async (groupId) => {
   }
 };
 
-export { getExpenses };
+const createExpense = async (groupId, body) => {
+  const config = {
+    method: 'post',
+    url: `/groups/${groupId}/expenses`,
+    headers: getHeadersWithAuth(),
+    data: body,
+  };
+  try {
+    const {
+      data: { createdExpense },
+    } = await service.request(config);
+
+    if (createdExpense) {
+      return {
+        success: true,
+        createdExpense: createdExpense,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+export { getExpenses, createExpense };

@@ -32,7 +32,7 @@ const GroupByIdPage = () => {
       }
     };
     getGroupData();
-  }, [groupId, isShowingForm]);
+  }, [groupId, isShowingForm, isShowingExpenseForm]);
 
   return (
     <>
@@ -70,7 +70,12 @@ const GroupByIdPage = () => {
           />
         )}
 
-        {isShowingExpenseForm && <ExpenseForm group={group} />}
+        {isShowingExpenseForm && (
+          <ExpenseForm
+            group={group}
+            setIsShowingExpenseForm={setIsShowingExpenseForm}
+          />
+        )}
       </div>
     </>
   );
