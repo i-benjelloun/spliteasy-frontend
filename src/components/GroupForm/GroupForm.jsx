@@ -119,7 +119,7 @@ const GroupForm = ({
         />
         <div className="form-buttons">
           <button className="btn" type="submit">
-            Submit
+            Save
           </button>
           <button
             className="btn"

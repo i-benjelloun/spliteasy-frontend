@@ -50,7 +50,7 @@ const ExpenseForm = ({ group, setIsShowingExpenseForm }) => {
       amount.indexOf('.') === -1 ||
       amount.indexOf('.') >= amount.length - 3
     ) {
-      return setExpenseAmount(amount);
+      setExpenseAmount(Number(amount));
     }
   };
 
@@ -67,7 +67,7 @@ const ExpenseForm = ({ group, setIsShowingExpenseForm }) => {
           paid_by,
           category,
           expense_amount,
-          shares,
+          shares: shares.filter((element) => element.share_amount !== 0),
           date,
         }
       );
