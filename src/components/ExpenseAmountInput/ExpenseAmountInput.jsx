@@ -9,6 +9,7 @@ const ExpenseAmountInput = ({ handleExpenseAmountChange }) => {
         type="number"
         min="0"
         step="0.01"
+        defaultValue={0}
         onChange={handleExpenseAmountChange}
         required
       />

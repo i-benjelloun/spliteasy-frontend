@@ -9,6 +9,8 @@ const ExpenseTitleInput = ({ handleTitleChange }) => {
         className="form-input"
         type="text"
         name="title"
+        placeholder="Enter expense title"
+        required
       />
     </div>
   );

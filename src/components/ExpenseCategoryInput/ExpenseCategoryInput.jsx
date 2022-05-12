@@ -15,6 +15,7 @@ const ExpenseCategoryInput = ({ handleCategoryChange }) => {
         closeMenuOnSelect={true}
         onChange={handleCategoryChange}
         options={options}
+        defaultValue={{ label: 'Other', value: 'Other' }}
       />
     </div>
   );
