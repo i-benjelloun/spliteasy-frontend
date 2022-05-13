@@ -66,7 +66,10 @@ const GroupByIdPage = () => {
         )}
 
         {pageStatus === 'balances' && (
-          <GroupBalances currency={group?.currency} />
+          <GroupBalances
+            currency={group?.currency}
+            setPageStatus={setPageStatus}
+          />
         )}
 
         {pageStatus === 'groupForm' && (

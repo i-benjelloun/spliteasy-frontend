@@ -8,8 +8,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 import './GroupForm.css';
+import { useNavigate } from 'react-router-dom';
 
 const GroupForm = ({ status, setPageStatus, group }) => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
@@ -71,7 +73,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     if (!success) {
       toast.error(errorMessage);
     } else {
-      setPageStatus('expenses');
+      navigate('/groups');
     }
   };
 
