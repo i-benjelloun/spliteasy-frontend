@@ -60,7 +60,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setPageStatus('groupById');
+        setPageStatus('expenses');
       }
     }
   };
@@ -71,7 +71,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     if (!success) {
       toast.error(errorMessage);
     } else {
-      setPageStatus('groupById');
+      setPageStatus('expenses');
     }
   };
 
@@ -81,7 +81,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
       setPageStatus('groups');
     }
     if (status === 'edit') {
-      setPageStatus('groupById');
+      setPageStatus('expenses');
     }
   };
 

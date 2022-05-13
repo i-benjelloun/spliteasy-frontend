@@ -2,12 +2,27 @@ import React, { useContext } from 'react';
 import './GroupHeader.css';
 import { AuthContext } from '../../context/auth.context';
 
-const GroupHeader = ({ group, setPageStatus }) => {
+const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
   const { user } = useContext(AuthContext);
 
   // Handle edit button
   const handleEditBtn = () => {
     setPageStatus('groupForm');
+  };
+
+  const handleExpBalChange = (e) => {
+    e.preventDefault();
+    switch (e.target.textContent) {
+      case 'Expenses':
+        setPageStatus('expenses');
+        break;
+      case 'Balances':
+        setPageStatus('balances');
+        break;
+      default:
+        setPageStatus('expenses');
+        break;
+    }
   };
 
   return (
@@ -29,6 +44,23 @@ const GroupHeader = ({ group, setPageStatus }) => {
             Edit
           </button>
         )}
+      </div>
+
+      <div className="form-buttons">
+        <button
+          onClick={handleExpBalChange}
+          className={`btn ${pageStatus === 'expenses' ? 'btn-selected' : ''}`}
+          type="button"
+        >
+          Expenses
+        </button>
+        <button
+          onClick={handleExpBalChange}
+          className={`btn ${pageStatus === 'balances' ? 'btn-selected' : ''}`}
+          type="button"
+        >
+          Balances
+        </button>
       </div>
     </div>
   );
