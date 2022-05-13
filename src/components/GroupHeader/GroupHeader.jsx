@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import './GroupHeader.css';
 import { AuthContext } from '../../context/auth.context';
 
-const GroupHeader = ({ group, setIsShowingForm }) => {
+const GroupHeader = ({ group, setPageStatus }) => {
   const { user } = useContext(AuthContext);
 
   // Handle edit button
   const handleEditBtn = () => {
-    setIsShowingForm(true);
+    setPageStatus('groupForm');
   };
 
   return (

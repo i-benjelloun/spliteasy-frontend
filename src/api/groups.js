@@ -60,7 +60,6 @@ const createGroup = async (body) => {
     if (createdGroup) {
       return {
         success: true,
-        createdGroup: createdGroup,
       };
     }
   } catch (err) {
@@ -86,7 +85,6 @@ const updateGroup = async (groupId, body) => {
     if (updatedGroup) {
       return {
         success: true,
-        updatedGroup: updatedGroup,
       };
     }
   } catch (err) {

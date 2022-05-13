@@ -6,18 +6,10 @@ import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
 import GroupTitleInput from '../GroupTitleInput/GroupTitleInput';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
-import './GroupForm.css';
-import { useNavigate } from 'react-router-dom';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
+import './GroupForm.css';
 
-const GroupForm = ({
-  status,
-  setIsShowingForm,
-  setGroups,
-  setGroup,
-  group,
-}) => {
-  const navigate = useNavigate();
+const GroupForm = ({ status, setPageStatus, group }) => {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
@@ -48,7 +40,7 @@ const GroupForm = ({
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (status === 'create') {
-      const { success, createdGroup, errorMessage } = await createGroup({
+      const { success, errorMessage } = await createGroup({
         title: capitalizeFirstLetter(title),
         currency,
         category,
@@ -57,28 +49,18 @@ const GroupForm = ({
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setGroups((prev) => {
-          return [...prev, createdGroup];
-        });
-        setIsShowingForm(false);
+        setPageStatus('groups');
       }
     }
     if (status === 'edit') {
-      const { success, updatedGroup, errorMessage } = await updateGroup(
-        group._id.toString(),
+      const { success, errorMessage } = await updateGroup(
+        group?._id.toString(),
         { title: capitalizeFirstLetter(title), members }
       );
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setGroup((prev) => {
-          return {
-            ...prev,
-            title: updatedGroup.title,
-            members: updatedGroup.members,
-          };
-        });
-        setIsShowingForm(false);
+        setPageStatus('groupById');
       }
     }
   };
@@ -89,7 +71,17 @@ const GroupForm = ({
     if (!success) {
       toast.error(errorMessage);
     } else {
-      navigate('/groups');
+      setPageStatus('groupById');
+    }
+  };
+
+  const handleCancelBtn = async (e) => {
+    e.preventDefault();
+    if (status === 'create') {
+      setPageStatus('groups');
+    }
+    if (status === 'edit') {
+      setPageStatus('groupById');
     }
   };
 
@@ -119,13 +111,9 @@ const GroupForm = ({
         />
         <div className="form-buttons">
           <button className="btn" type="submit">
-            Submit
+            Save
           </button>
-          <button
-            className="btn"
-            type="button"
-            onClick={() => setIsShowingForm(false)}
-          >
+          <button onClick={handleCancelBtn} className="btn" type="button">
             Cancel
           </button>
         </div>

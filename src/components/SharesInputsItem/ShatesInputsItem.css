@@ -1,0 +1,14 @@
+.shares-inputs-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.shares-inputs-item > * {
+  min-width: 0;
+}
+
+.shares-input {
+  width: 4rem;
+  margin-left: 2rem;
+}

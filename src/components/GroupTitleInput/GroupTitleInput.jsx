@@ -10,7 +10,6 @@ const GroupTitleInput = ({ title, handleTitleChange }) => {
       <input
         className="form-input"
         type="text"
-        id="title-input"
         name="title"
         value={title}
         onChange={handleTitleChange}

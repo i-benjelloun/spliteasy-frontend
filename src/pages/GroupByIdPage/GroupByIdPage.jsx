@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getGroupById } from '../../api/groups';
+import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
 import ExpensesList from '../../components/ExpensesList/ExpensesList';
 import GroupForm from '../../components/GroupForm/GroupForm';
 import GroupHeader from '../../components/GroupHeader/GroupHeader';
@@ -9,10 +10,14 @@ import './GroupByIdPage.css';
 
 const GroupByIdPage = () => {
   const { groupId } = useParams();
-  const [isShowingForm, setIsShowingForm] = useState(false);
   const [group, setGroup] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageStatus, setPageStatus] = useState('groupById');
+
+  const handleCreateExpenseBtn = () => {
+    setPageStatus('expenseForm');
+  };
 
   // Get group data
   useEffect(() => {
@@ -26,7 +31,7 @@ const GroupByIdPage = () => {
       }
     };
     getGroupData();
-  }, [groupId, isShowingForm]);
+  }, [groupId, pageStatus]);
 
   return (
     <>
@@ -37,27 +42,30 @@ const GroupByIdPage = () => {
         </div>
       )}
       <div className="group-by-id-page">
-        {!isShowingForm && (
+        {(pageStatus === 'groupById' || pageStatus === 'balances') && (
           <>
-            <GroupHeader
-              group={group}
-              setGroup={setGroup}
-              setIsShowingForm={setIsShowingForm}
-            />
+            <GroupHeader group={group} setPageStatus={setPageStatus} />
             <ExpensesList groupId={groupId} currency={group?.currency} />
-            <button className="create-btn create-expense">
+            <button
+              type="button"
+              onClick={handleCreateExpenseBtn}
+              className="create-btn create-expense"
+            >
               <i className="fa-solid fa-circle-plus fa-4x"></i>
             </button>
           </>
         )}
 
-        {isShowingForm && (
+        {pageStatus === 'groupForm' && (
           <GroupForm
             status={'edit'}
+            setPageStatus={setPageStatus}
             group={group}
-            setGroup={setGroup}
-            setIsShowingForm={setIsShowingForm}
           />
+        )}
+
+        {pageStatus === 'expenseForm' && (
+          <ExpenseForm group={group} setPageStatus={setPageStatus} />
         )}
       </div>
     </>
