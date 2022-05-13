@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import './GroupHeader.css';
 import { AuthContext } from '../../context/auth.context';
+import encryptId from '../../utils/encryptId';
 
 const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
   const { user } = useContext(AuthContext);
@@ -25,9 +26,20 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
     }
   };
 
+  const handleShareBtn = (e) => {
+    e.preventDefault();
+    const encryptedId = encryptId(group._id.toString());
+    console.log(group._id.toString(), encryptedId);
+    navigator.clipboard.writeText(`localhost:3000/groups/${encryptedId}/join`);
+    window.alert('Link copied to clipboard');
+  };
+
   return (
     <div className="group-header">
       <h1>{group?.title}</h1>
+      <button onClick={handleShareBtn} className="btn">
+        Share
+      </button>
       <ul>
         {group?.members.map((member, index) => (
           <li key={index}>

@@ -7,6 +7,7 @@ import IsAnonymous from './components/IsAnonymous';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
 import GroupByIdPage from './pages/GroupByIdPage/GroupByIdPage';
 import ExpenseByIdPage from './pages/ExpenseByIdPage/ExpenseByIdPage';
+import GroupJoin from './components/GroupJoin/GroupJoin';
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
           element={
             <IsPrivate>
               <ExpenseByIdPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/groups/:encryptedId/join"
+          element={
+            <IsPrivate>
+              <GroupJoin />
             </IsPrivate>
           }
         />

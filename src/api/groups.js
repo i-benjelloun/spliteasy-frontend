@@ -149,6 +149,32 @@ const getGroupBalances = async (groupId) => {
   }
 };
 
+// Join Group
+const joinGroup = async (encryptedId) => {
+  const config = {
+    method: 'patch',
+    url: `/groups/${encryptedId}/join`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { updatedGroup },
+    } = await service.request(config);
+
+    if (updatedGroup) {
+      return {
+        success: true,
+        groupId: updatedGroup._id,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
 export {
   getGroups,
   createGroup,
@@ -156,4 +182,5 @@ export {
   updateGroup,
   deleteGroup,
   getGroupBalances,
+  joinGroup,
 };
