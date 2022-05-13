@@ -12,7 +12,7 @@ import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 const GroupForm = ({
   status,
-  setIsShowingForm,
+  setIsShowingGroupForm,
   setGroups,
   setGroup,
   group,
@@ -60,7 +60,7 @@ const GroupForm = ({
         setGroups((prev) => {
           return [...prev, createdGroup];
         });
-        setIsShowingForm(false);
+        setIsShowingGroupForm(false);
       }
     }
     if (status === 'edit') {
@@ -78,7 +78,7 @@ const GroupForm = ({
             members: updatedGroup.members,
           };
         });
-        setIsShowingForm(false);
+        setIsShowingGroupForm(false);
       }
     }
   };
@@ -124,7 +124,7 @@ const GroupForm = ({
           <button
             className="btn"
             type="button"
-            onClick={() => setIsShowingForm(false)}
+            onClick={() => setIsShowingGroupForm(false)}
           >
             Cancel
           </button>

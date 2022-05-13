@@ -10,7 +10,7 @@ import './GroupByIdPage.css';
 
 const GroupByIdPage = () => {
   const { groupId } = useParams();
-  const [isShowingForm, setIsShowingForm] = useState(false);
+  const [isShowingGroupForm, setIsShowingGroupForm] = useState(false);
   const [isShowingExpenseForm, setIsShowingExpenseForm] = useState(false);
   const [group, setGroup] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -32,7 +32,7 @@ const GroupByIdPage = () => {
       }
     };
     getGroupData();
-  }, [groupId, isShowingForm, isShowingExpenseForm]);
+  }, [groupId, isShowingGroupForm, isShowingExpenseForm]);
 
   return (
     <>
@@ -43,12 +43,12 @@ const GroupByIdPage = () => {
         </div>
       )}
       <div className="group-by-id-page">
-        {!isShowingForm && !isShowingExpenseForm && (
+        {!isShowingGroupForm && !isShowingExpenseForm && (
           <>
             <GroupHeader
               group={group}
               setGroup={setGroup}
-              setIsShowingForm={setIsShowingForm}
+              setIsShowingGroupForm={setIsShowingGroupForm}
             />
             <ExpensesList groupId={groupId} currency={group?.currency} />
             <button
@@ -61,12 +61,12 @@ const GroupByIdPage = () => {
           </>
         )}
 
-        {isShowingForm && (
+        {isShowingGroupForm && (
           <GroupForm
             status={'edit'}
             group={group}
             setGroup={setGroup}
-            setIsShowingForm={setIsShowingForm}
+            setIsShowingGroupForm={setIsShowingGroupForm}
           />
         )}
 
