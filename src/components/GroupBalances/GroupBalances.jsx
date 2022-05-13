@@ -24,7 +24,7 @@ const GroupBalances = ({ currency, setPageStatus }) => {
       }
     };
     getBalancesData();
-  });
+  }, [groupId]);
 
   return (
     <div className="group-balances">

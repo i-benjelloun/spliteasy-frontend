@@ -117,14 +117,16 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
 
   const handleDeleteBtn = async (e) => {
     e.preventDefault();
-    const { success, errorMessage } = await deleteExpense(
-      group?._id.toString(),
-      expense?._id.toString()
-    );
-    if (!success) {
-      toast.error(errorMessage);
-    } else {
-      navigate(`/groups/${group._id.toString()}`);
+    if (window.confirm('Confirm expense deletion ?')) {
+      const { success, errorMessage } = await deleteExpense(
+        group?._id.toString(),
+        expense?._id.toString()
+      );
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        navigate(`/groups/${group._id.toString()}`);
+      }
     }
   };
 

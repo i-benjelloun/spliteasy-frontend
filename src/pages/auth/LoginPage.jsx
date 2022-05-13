@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
 const { login } = require('../../api/auth');
 
@@ -8,6 +8,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(undefined);
   const { isLoggedIn, authenticateUser } = useContext(AuthContext);
+  const location = useLocation();
 
   const navigate = useNavigate();
 
@@ -26,7 +27,11 @@ function LoginPage() {
       setErrorMessage(errorMessage);
     } else {
       await authenticateUser();
-      navigate('/groups');
+      if (location.state?.from) {
+        navigate(location.state.from);
+      } else {
+        navigate('/groups');
+      }
     }
   };
 
