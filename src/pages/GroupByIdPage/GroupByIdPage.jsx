@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getGroupById } from '../../api/groups';
 import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
 import ExpensesList from '../../components/ExpensesList/ExpensesList';
+import GroupBalances from '../../components/GroupBalances/GroupBalances';
 import GroupForm from '../../components/GroupForm/GroupForm';
 import GroupHeader from '../../components/GroupHeader/GroupHeader';
 import Navbar from '../../components/Navbar/Navbar';
@@ -13,7 +14,7 @@ const GroupByIdPage = () => {
   const [group, setGroup] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [pageStatus, setPageStatus] = useState('groupById');
+  const [pageStatus, setPageStatus] = useState('expenses');
 
   const handleCreateExpenseBtn = () => {
     setPageStatus('expenseForm');
@@ -41,10 +42,18 @@ const GroupByIdPage = () => {
           <i className="fas fa-spinner fa-spin fa-3x"></i>
         </div>
       )}
+
       <div className="group-by-id-page">
-        {(pageStatus === 'groupById' || pageStatus === 'balances') && (
+        {(pageStatus === 'expenses' || pageStatus === 'balances') && (
+          <GroupHeader
+            group={group}
+            pageStatus={pageStatus}
+            setPageStatus={setPageStatus}
+          />
+        )}
+
+        {pageStatus === 'expenses' && (
           <>
-            <GroupHeader group={group} setPageStatus={setPageStatus} />
             <ExpensesList groupId={groupId} currency={group?.currency} />
             <button
               type="button"
@@ -54,6 +63,13 @@ const GroupByIdPage = () => {
               <i className="fa-solid fa-circle-plus fa-4x"></i>
             </button>
           </>
+        )}
+
+        {pageStatus === 'balances' && (
+          <GroupBalances
+            currency={group?.currency}
+            setPageStatus={setPageStatus}
+          />
         )}
 
         {pageStatus === 'groupForm' && (

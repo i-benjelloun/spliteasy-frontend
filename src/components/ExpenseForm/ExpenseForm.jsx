@@ -75,14 +75,14 @@ const ExpenseForm = ({ group, setPageStatus }) => {
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setPageStatus('groupById');
+        setPageStatus('expenses');
       }
     }
   };
 
   const handleCancelBtn = async (e) => {
     e.preventDefault();
-    setPageStatus('groupById');
+    setPageStatus('expenses');
   };
 
   return (

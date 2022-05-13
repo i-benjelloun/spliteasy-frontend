@@ -70,6 +70,7 @@ const createGroup = async (body) => {
   }
 };
 
+// Update Group
 const updateGroup = async (groupId, body) => {
   const config = {
     method: 'patch',
@@ -95,6 +96,7 @@ const updateGroup = async (groupId, body) => {
   }
 };
 
+// Delete group
 const deleteGroup = async (groupId) => {
   const config = {
     method: 'delete',
@@ -120,4 +122,38 @@ const deleteGroup = async (groupId) => {
   }
 };
 
-export { getGroups, createGroup, getGroupById, updateGroup, deleteGroup };
+// Get Group balances
+const getGroupBalances = async (groupId) => {
+  const config = {
+    method: 'get',
+    url: `/groups/${groupId}/balances`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { balances, reimbursements },
+    } = await service.request(config);
+
+    if (balances && reimbursements) {
+      return {
+        success: true,
+        balances: balances,
+        reimbursements: reimbursements,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+export {
+  getGroups,
+  createGroup,
+  getGroupById,
+  updateGroup,
+  deleteGroup,
+  getGroupBalances,
+};

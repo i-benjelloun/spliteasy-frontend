@@ -42,7 +42,6 @@ const createExpense = async (groupId, body) => {
     if (createdExpense) {
       return {
         success: true,
-        createdExpense: createdExpense,
       };
     }
   } catch (err) {
