@@ -2,11 +2,11 @@ import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import SignupPage from './pages/auth/SignupPage';
 import LoginPage from './pages/auth/LoginPage';
-import Navbar from './components/Navbar/Navbar';
 import IsPrivate from './components/IsPrivate';
 import IsAnonymous from './components/IsAnonymous';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
 import GroupByIdPage from './pages/GroupByIdPage/GroupByIdPage';
+import ExpenseByIdPage from './pages/ExpenseByIdPage/ExpenseByIdPage';
 
 function App() {
   return (
@@ -25,6 +25,14 @@ function App() {
           element={
             <IsPrivate>
               <GroupByIdPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/groups/:groupId/expenses/:expenseId"
+          element={
+            <IsPrivate>
+              <ExpenseByIdPage />
             </IsPrivate>
           }
         />

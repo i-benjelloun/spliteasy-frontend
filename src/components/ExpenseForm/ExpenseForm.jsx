@@ -7,18 +7,28 @@ import ExpenseSharesInput from '../SharesInputs/SharesInputs';
 import ExpenseTitleInput from '../ExpenseTitleInput/ExpenseTitleInput';
 import { validateExpense } from '../../utils/validateExpense';
 import toast, { Toaster } from 'react-hot-toast';
-import { createExpense } from '../../api/expenses';
+import {
+  createExpense,
+  deleteExpense,
+  updateExpense,
+} from '../../api/expenses';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 import { AuthContext } from '../../context/auth.context';
+import { useNavigate } from 'react-router-dom';
 
-const ExpenseForm = ({ group, setPageStatus }) => {
+const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(status === 'edit' ? expense?.title : '');
   const [paid_by, setPaidBy] = useState(user._id);
   const [category, setCategory] = useState('Other');
-  const [expense_amount, setExpenseAmount] = useState(0);
+  const [expense_amount, setExpenseAmount] = useState(
+    status === 'edit' ? expense?.expense_amount : 0
+  );
   const [shares, setShares] = useState([]);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(
+    status === 'edit' ? expense?.date : new Date()
+  );
 
   useEffect(() => {
     const shares = group?.members.map((member) => ({
@@ -60,49 +70,98 @@ const ExpenseForm = ({ group, setPageStatus }) => {
     if (!isValid) {
       return toast.error('Total shares must add up to expense amount');
     } else {
-      const { success, errorMessage } = await createExpense(
-        group._id.toString(),
-        {
-          title: capitalizeFirstLetter(title),
-          paid_by,
-          category,
-          expense_amount,
-          shares: shares.filter((element) => element.share_amount !== 0),
-          date,
+      if (status === 'create') {
+        const { success, errorMessage } = await createExpense(
+          group._id.toString(),
+          {
+            title: capitalizeFirstLetter(title),
+            paid_by,
+            category,
+            expense_amount,
+            shares: shares.filter((element) => element.share_amount !== 0),
+            date,
+          }
+        );
+        if (!success) {
+          toast.error(errorMessage);
+        } else {
+          setPageStatus('expenses');
         }
-      );
-
-      if (!success) {
-        toast.error(errorMessage);
-      } else {
-        setPageStatus('expenses');
+      }
+      if (status === 'edit') {
+        const { success, errorMessage } = await updateExpense(
+          group._id.toString(),
+          expense._id.toString(),
+          {
+            title: capitalizeFirstLetter(title),
+            paid_by,
+            category,
+            expense_amount,
+            shares: shares.filter((element) => element.share_amount !== 0),
+            date,
+          }
+        );
+        if (!success) {
+          toast.error(errorMessage);
+        } else {
+          setPageStatus('expense');
+        }
       }
     }
   };
 
   const handleCancelBtn = async (e) => {
     e.preventDefault();
-    setPageStatus('expenses');
+    setPageStatus(status === 'edit' ? 'expense' : 'expenses');
+  };
+
+  const handleDeleteBtn = async (e) => {
+    e.preventDefault();
+    const { success, errorMessage } = await deleteExpense(
+      group?._id.toString(),
+      expense?._id.toString()
+    );
+    if (!success) {
+      toast.error(errorMessage);
+    } else {
+      navigate(`/groups/${group._id.toString()}`);
+    }
   };
 
   return (
     <div className="group-form-container">
       <h1>Expense form</h1>
       <form onSubmit={handleSubmit} className="group-form">
-        <ExpenseTitleInput handleTitleChange={handleTitleChange} />
+        <ExpenseTitleInput
+          handleTitleChange={handleTitleChange}
+          defaultValue={expense?.title}
+          status={status}
+        />
 
         <ExpensePaidByInput
           handlePaidByChange={handlePaidByChange}
           members={group?.members}
+          defaultValue={expense?.paid_by}
+          status={status}
         />
 
-        <ExpenseCategoryInput handleCategoryChange={handleCategoryChange} />
+        <ExpenseCategoryInput
+          handleCategoryChange={handleCategoryChange}
+          defaultValue={expense?.category}
+          status={status}
+        />
 
         <ExpenseAmountInput
           handleExpenseAmountChange={handleExpenseAmountChange}
+          defaultValue={expense?.expense_amount}
+          status={status}
         />
 
-        <ExpenseDateInput handleDateChange={handleDateChange} date={date} />
+        <ExpenseDateInput
+          handleDateChange={handleDateChange}
+          date={date}
+          status={status}
+        />
 
         <ExpenseSharesInput
           members={group?.members}
@@ -119,6 +178,11 @@ const ExpenseForm = ({ group, setPageStatus }) => {
             Cancel
           </button>
         </div>
+        {status === 'edit' && (
+          <button onClick={handleDeleteBtn} className="btn" type="button">
+            {'Delete'}
+          </button>
+        )}
       </form>
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>

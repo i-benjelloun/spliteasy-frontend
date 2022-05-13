@@ -1,0 +1,10 @@
+.expense-shares-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px black solid;
+}
+
+.expense-shares-item * {
+  margin-bottom: 0.5rem;
+}

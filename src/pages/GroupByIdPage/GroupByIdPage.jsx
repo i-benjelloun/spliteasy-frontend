@@ -81,7 +81,11 @@ const GroupByIdPage = () => {
         )}
 
         {pageStatus === 'expenseForm' && (
-          <ExpenseForm group={group} setPageStatus={setPageStatus} />
+          <ExpenseForm
+            group={group}
+            status={'create'}
+            setPageStatus={setPageStatus}
+          />
         )}
       </div>
     </>

@@ -52,4 +52,87 @@ const createExpense = async (groupId, body) => {
   }
 };
 
-export { getExpenses, createExpense };
+// Get expenses
+const getExpenseById = async (groupId, expenseId) => {
+  const config = {
+    method: 'get',
+    url: `/groups/${groupId}/expenses/${expenseId}`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { expense },
+    } = await service.request(config);
+
+    if (expense) {
+      return {
+        success: true,
+        expense: expense,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+// Update expense
+const updateExpense = async (groupId, expenseId, body) => {
+  const config = {
+    method: 'patch',
+    url: `/groups/${groupId}/expenses/${expenseId}`,
+    headers: getHeadersWithAuth(),
+    data: body,
+  };
+  try {
+    const {
+      data: { updatedExpense },
+    } = await service.request(config);
+
+    if (updatedExpense) {
+      return {
+        success: true,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+// Delete expense
+const deleteExpense = async (groupId, expenseId) => {
+  const config = {
+    method: 'delete',
+    url: `/groups/${groupId}/expenses/${expenseId}`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { deletedExpense },
+    } = await service.request(config);
+
+    if (deletedExpense) {
+      return {
+        success: true,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+export {
+  getExpenses,
+  createExpense,
+  getExpenseById,
+  updateExpense,
+  deleteExpense,
+};
