@@ -11,7 +11,7 @@ import { createExpense } from '../../api/expenses';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 import { AuthContext } from '../../context/auth.context';
 
-const ExpenseForm = ({ group, setIsShowingExpenseForm }) => {
+const ExpenseForm = ({ group, setPageStatus }) => {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState('');
   const [paid_by, setPaidBy] = useState(user._id);
@@ -75,9 +75,14 @@ const ExpenseForm = ({ group, setIsShowingExpenseForm }) => {
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setIsShowingExpenseForm(false);
+        setPageStatus('groupById');
       }
     }
+  };
+
+  const handleCancelBtn = async (e) => {
+    e.preventDefault();
+    setPageStatus('groupById');
   };
 
   return (
@@ -110,11 +115,7 @@ const ExpenseForm = ({ group, setIsShowingExpenseForm }) => {
           <button className="btn" type="submit">
             Save
           </button>
-          <button
-            className="btn"
-            type="button"
-            onClick={() => setIsShowingExpenseForm(false)}
-          >
+          <button className="btn" type="button" onClick={handleCancelBtn}>
             Cancel
           </button>
         </div>

@@ -10,14 +10,13 @@ import './GroupByIdPage.css';
 
 const GroupByIdPage = () => {
   const { groupId } = useParams();
-  const [isShowingGroupForm, setIsShowingGroupForm] = useState(false);
-  const [isShowingExpenseForm, setIsShowingExpenseForm] = useState(false);
   const [group, setGroup] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageStatus, setPageStatus] = useState('groupById');
 
   const handleCreateExpenseBtn = () => {
-    setIsShowingExpenseForm(true);
+    setPageStatus('expenseForm');
   };
 
   // Get group data
@@ -32,7 +31,7 @@ const GroupByIdPage = () => {
       }
     };
     getGroupData();
-  }, [groupId, isShowingGroupForm, isShowingExpenseForm]);
+  }, [groupId, pageStatus]);
 
   return (
     <>
@@ -43,13 +42,9 @@ const GroupByIdPage = () => {
         </div>
       )}
       <div className="group-by-id-page">
-        {!isShowingGroupForm && !isShowingExpenseForm && (
+        {(pageStatus === 'groupById' || pageStatus === 'balances') && (
           <>
-            <GroupHeader
-              group={group}
-              setGroup={setGroup}
-              setIsShowingGroupForm={setIsShowingGroupForm}
-            />
+            <GroupHeader group={group} setPageStatus={setPageStatus} />
             <ExpensesList groupId={groupId} currency={group?.currency} />
             <button
               type="button"
@@ -61,20 +56,16 @@ const GroupByIdPage = () => {
           </>
         )}
 
-        {isShowingGroupForm && (
+        {pageStatus === 'groupForm' && (
           <GroupForm
             status={'edit'}
+            setPageStatus={setPageStatus}
             group={group}
-            setGroup={setGroup}
-            setIsShowingGroupForm={setIsShowingGroupForm}
           />
         )}
 
-        {isShowingExpenseForm && (
-          <ExpenseForm
-            group={group}
-            setIsShowingExpenseForm={setIsShowingExpenseForm}
-          />
+        {pageStatus === 'expenseForm' && (
+          <ExpenseForm group={group} setPageStatus={setPageStatus} />
         )}
       </div>
     </>

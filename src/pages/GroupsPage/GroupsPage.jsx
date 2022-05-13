@@ -8,7 +8,7 @@ import './GroupsPage.css';
 const GroupsPage = (props) => {
   const [groups, setGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isShowingGroupForm, setIsShowingGroupForm] = useState(false);
+  const [pageStatus, setPageStatus] = useState('groups');
 
   const getGroupsData = async () => {
     const groups = await getGroups();
@@ -19,24 +19,20 @@ const GroupsPage = (props) => {
   // Get groups data
   useEffect(() => {
     getGroupsData();
-  }, [isShowingGroupForm]);
+  }, [pageStatus]);
 
   // Handle create group button
   const handleCreateBtn = () => {
-    setIsShowingGroupForm(true);
+    setPageStatus('groupForm');
   };
 
   return (
     <>
       <Navbar />
-      {isShowingGroupForm && (
-        <GroupForm
-          status={'create'}
-          setIsShowingGroupForm={setIsShowingGroupForm}
-          setGroups={setGroups}
-        />
+      {pageStatus === 'groupForm' && (
+        <GroupForm status={'create'} setPageStatus={setPageStatus} />
       )}
-      {!isShowingGroupForm && (
+      {pageStatus === 'groups' && (
         <section className="groups-page">
           <h1>Groups</h1>
 
