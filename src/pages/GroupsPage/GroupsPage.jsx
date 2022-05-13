@@ -5,7 +5,7 @@ import GroupForm from '../../components/GroupForm/GroupForm';
 import Navbar from '../../components/Navbar/Navbar';
 import './GroupsPage.css';
 
-const GroupsPage = (props) => {
+const GroupsPage = () => {
   const [groups, setGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageStatus, setPageStatus] = useState('groups');

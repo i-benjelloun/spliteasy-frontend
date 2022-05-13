@@ -69,11 +69,15 @@ const GroupForm = ({ status, setPageStatus, group }) => {
 
   const handleDeleteBtn = async (e) => {
     e.preventDefault();
-    const { success, errorMessage } = await deleteGroup(group?._id.toString());
-    if (!success) {
-      toast.error(errorMessage);
-    } else {
-      navigate('/groups');
+    if (window.confirm('Confirm groupe deletion ?')) {
+      const { success, errorMessage } = await deleteGroup(
+        group?._id.toString()
+      );
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        navigate('/groups');
+      }
     }
   };
 
