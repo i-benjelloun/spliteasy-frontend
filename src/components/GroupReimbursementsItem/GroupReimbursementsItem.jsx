@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import './GroupReimbursementsItem.css';
 import { createExpense } from '../../api/expenses';
 import { useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from '../../context/auth.context';
 
 const GroupReimbursementsItem = ({
   reimbursement,
@@ -11,6 +12,8 @@ const GroupReimbursementsItem = ({
   setPageStatus,
 }) => {
   const { groupId } = useParams();
+  const { user } = useContext(AuthContext);
+
   const handelPaidBtn = async (e) => {
     e.preventDefault();
     const body = {
@@ -30,7 +33,7 @@ const GroupReimbursementsItem = ({
     if (!success) {
       toast.error(errorMessage);
     } else {
-      setPageStatus('balances');
+      setPageStatus('expenses');
     }
   };
 
@@ -42,13 +45,17 @@ const GroupReimbursementsItem = ({
         <h4>{reimbursement.owes_to.firstName}</h4>
       </div>
       <div className="testt">
-        <p>
+        <h4>
           {getSymbolFromCurrency(currency)}
           {Math.abs(reimbursement.owed_amount)}
-        </p>
-        <button onClick={handelPaidBtn} className="btn" type="button">
-          Mark as paid
-        </button>
+        </h4>
+
+        {(user._id === reimbursement.user._id.toString() ||
+          user._id === reimbursement.owes_to._id.toString()) && (
+          <button onClick={handelPaidBtn} className="btn" type="button">
+            Mark as paid
+          </button>
+        )}
       </div>
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>

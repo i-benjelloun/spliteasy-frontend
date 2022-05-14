@@ -56,7 +56,7 @@ const SharesInputs = ({ members, expense_amount, setShares, currency }) => {
   return (
     <div>
       <p>Shares</p>
-      <div className="form-buttons">
+      <div className="full-width" id="split-options">
         <button
           onClick={handleSplitMethodChange}
           className={`btn ${splitMethod === 'equally' ? 'btn-selected' : ''}`}

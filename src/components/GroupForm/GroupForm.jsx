@@ -93,7 +93,12 @@ const GroupForm = ({ status, setPageStatus, group }) => {
 
   return (
     <div className="group-form-container">
-      <h1>{status === 'create' ? 'Create group' : 'Edit group'}</h1>
+      <div className="full-width">
+        <h1>{status === 'create' ? 'New group' : 'Edit group'}</h1>
+        <button onClick={handleCancelBtn} className="icon-btn">
+          <i className="fa-solid fa-xmark fa-2x"></i>
+        </button>
+      </div>
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
 
@@ -116,18 +121,19 @@ const GroupForm = ({ status, setPageStatus, group }) => {
           status={status}
         />
         <div className="form-buttons">
-          <button className="btn" type="submit">
+          <button className="btn save-btn" type="submit">
             Save
           </button>
-          <button onClick={handleCancelBtn} className="btn" type="button">
-            Cancel
-          </button>
+          {status === 'edit' && (
+            <button
+              onClick={handleDeleteBtn}
+              className="btn delete-btn"
+              type="button"
+            >
+              {'Delete'}
+            </button>
+          )}
         </div>
-        {status === 'edit' && (
-          <button onClick={handleDeleteBtn} className="btn" type="button">
-            {'Delete'}
-          </button>
-        )}
       </form>
 
       <Toaster position="bottom-center" reverseOrder={false} />

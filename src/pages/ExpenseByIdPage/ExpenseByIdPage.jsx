@@ -5,7 +5,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import ExpenseHeader from '../../components/ExpenseHeader/ExpenseHeader';
 import ExpenseSharesList from '../../components/ExpenseSharesList/ExpenseSharesList';
 import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
-import Navbar from '../../components/Navbar/Navbar';
 
 const ExpenseByIdPage = () => {
   const { groupId, expenseId } = useParams();
@@ -30,41 +29,38 @@ const ExpenseByIdPage = () => {
   }, [groupId, expenseId, pageStatus]);
 
   return (
-    <>
-      <Navbar />
-      <div className="expense-by-id-page">
-        {isLoading && (
-          <div className="spinner">
-            <i className="fas fa-spinner fa-spin fa-3x"></i>
-          </div>
-        )}
-        {pageStatus === 'expense' && (
-          <>
-            <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
-            <ExpenseSharesList
-              shares={expense?.shares}
-              currency={expense?.group.currency}
-            />
-          </>
-        )}
-
-        {pageStatus === 'expenseForm' && (
-          <ExpenseForm
-            group={expense?.group}
-            expense={expense}
-            status={'edit'}
-            setPageStatus={setPageStatus}
+    <div className="expense-by-id-page">
+      {isLoading && (
+        <div className="spinner">
+          <i className="fas fa-spinner fa-spin fa-3x"></i>
+        </div>
+      )}
+      {pageStatus === 'expense' && (
+        <>
+          <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
+          <ExpenseSharesList
+            shares={expense?.shares}
+            currency={expense?.group.currency}
           />
-        )}
+        </>
+      )}
 
-        <Toaster
-          position="bottom-center"
-          reverseOrder={false}
+      {pageStatus === 'expenseForm' && (
+        <ExpenseForm
+          group={expense?.group}
           expense={expense}
+          status={'edit'}
           setPageStatus={setPageStatus}
         />
-      </div>
-    </>
+      )}
+
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        expense={expense}
+        setPageStatus={setPageStatus}
+      />
+    </div>
   );
 };
 

@@ -9,6 +9,13 @@
 }
 
 .shares-input {
-  width: 4rem;
+  width: 3rem;
   margin-left: 2rem;
+}
+.shares-input-field {
+  width: 8rem;
+}
+
+input[type='checkbox'] {
+  margin-right: 0.5rem;
 }

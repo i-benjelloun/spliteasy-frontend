@@ -27,7 +27,7 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
   );
   const [shares, setShares] = useState([]);
   const [date, setDate] = useState(
-    status === 'edit' ? expense?.date : new Date()
+    status === 'edit' ? new Date(expense?.date) : new Date()
   );
 
   useEffect(() => {
@@ -132,7 +132,12 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
 
   return (
     <div className="group-form-container">
-      <h1>Expense form</h1>
+      <div className="full-width">
+        <h1>{status === 'create' ? 'New expense' : 'Edit expense'}</h1>
+        <button onClick={handleCancelBtn} className="icon-btn">
+          <i className="fa-solid fa-xmark fa-2x"></i>
+        </button>
+      </div>
       <form onSubmit={handleSubmit} className="group-form">
         <ExpenseTitleInput
           handleTitleChange={handleTitleChange}
@@ -173,18 +178,20 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
           shares={shares}
         />
         <div className="form-buttons">
-          <button className="btn" type="submit">
+          <button className="btn save-btn" type="submit">
             Save
           </button>
-          <button className="btn" type="button" onClick={handleCancelBtn}>
-            Cancel
-          </button>
+
+          {status === 'edit' && (
+            <button
+              onClick={handleDeleteBtn}
+              className="btn delete-btn"
+              type="button"
+            >
+              {'Delete'}
+            </button>
+          )}
         </div>
-        {status === 'edit' && (
-          <button onClick={handleDeleteBtn} className="btn" type="button">
-            {'Delete'}
-          </button>
-        )}
       </form>
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>

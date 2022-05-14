@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { getGroups } from '../../api/groups';
 import GroupCard from '../../components/GroupCard/GroupCard';
 import GroupForm from '../../components/GroupForm/GroupForm';
-import Navbar from '../../components/Navbar/Navbar';
 import './GroupsPage.css';
 
 const GroupsPage = () => {
@@ -28,7 +27,6 @@ const GroupsPage = () => {
 
   return (
     <>
-      <Navbar />
       {pageStatus === 'groupForm' && (
         <GroupForm status={'create'} setPageStatus={setPageStatus} />
       )}
@@ -59,7 +57,10 @@ const GroupsPage = () => {
 
           {!isLoading && groups.length === 0 && <h3>You have no groups yet</h3>}
 
-          <button onClick={handleCreateBtn} className="create-btn create-group">
+          <button
+            onClick={handleCreateBtn}
+            className="create-btn create-expense"
+          >
             <i className="fa-solid fa-circle-plus fa-4x"></i>
           </button>
         </section>

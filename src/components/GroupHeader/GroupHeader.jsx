@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import './GroupHeader.css';
 import { AuthContext } from '../../context/auth.context';
+import toast, { Toaster } from 'react-hot-toast';
 import encryptId from '../../utils/encryptId';
 
 const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
@@ -29,51 +30,55 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
   const handleShareBtn = (e) => {
     e.preventDefault();
     const encryptedId = encryptId(group._id.toString());
-    console.log(group._id.toString(), encryptedId);
     navigator.clipboard.writeText(`localhost:3000/groups/${encryptedId}/join`);
-    window.alert('Link copied to clipboard');
+    toast.success('Link copied to clipboard');
   };
 
   return (
     <div className="group-header">
-      <h1>{group?.title}</h1>
-      <button onClick={handleShareBtn} className="btn">
-        Share
-      </button>
-      <ul>
+      <div className="full-width">
+        <h1 className="group-title">{group?.title}</h1>
+        {user._id === group?.owner._id.toString() && (
+          <button onClick={handleEditBtn} className="icon-btn">
+            <i className="fa-solid fa-pen-to-square fa-2x"></i>
+          </button>
+        )}
+      </div>
+      <ul className="group-header-members">
         {group?.members.map((member, index) => (
           <li key={index}>
             {member.firstName}
             {member._id.toString() === group?.owner._id.toString() && (
-              <span style={{ fontWeight: 'normal' }}>(owner)</span>
+              <span style={{ fontWeight: 'normal' }}> (owner)</span>
             )}
           </li>
         ))}
       </ul>
+
       <div className="group-header-btns">
         {user._id === group?.owner._id.toString() && (
-          <button onClick={handleEditBtn} className="btn" type="button">
-            Edit
+          <button onClick={handleShareBtn} className="btn share-btn">
+            <i className="fa-solid fa-share-from-square"></i>
+            Share
           </button>
         )}
       </div>
 
-      <div className="form-buttons">
-        <button
+      <div className="nav">
+        <div
           onClick={handleExpBalChange}
-          className={`btn ${pageStatus === 'expenses' ? 'btn-selected' : ''}`}
-          type="button"
+          className={pageStatus === 'expenses' ? 'view-selected' : ''}
         >
           Expenses
-        </button>
-        <button
+        </div>
+        <div
           onClick={handleExpBalChange}
-          className={`btn ${pageStatus === 'balances' ? 'btn-selected' : ''}`}
-          type="button"
+          className={pageStatus === 'balances' ? 'view-selected' : ''}
         >
           Balances
-        </button>
+        </div>
       </div>
+      <Toaster position="bottom-center" reverseOrder={false} />
     </div>
   );
 };
