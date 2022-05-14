@@ -66,6 +66,7 @@ function App() {
             </IsAnonymous>
           }
         />
+        <Route path="*" element={<Navigate to="/groups" replace />} />
       </Routes>
     </div>
   );
