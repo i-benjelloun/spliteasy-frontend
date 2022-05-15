@@ -8,11 +8,16 @@ const GroupsPage = () => {
   const [groups, setGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageStatus, setPageStatus] = useState('groups');
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   const getGroupsData = async () => {
-    const groups = await getGroups();
-    setGroups(groups);
-    setIsLoading(false);
+    const { groups, success, errorMessage } = await getGroups();
+    if (success) {
+      setGroups(groups);
+      setIsLoading(false);
+    } else {
+      setErrorMessage(errorMessage);
+    }
   };
 
   // Get groups data
@@ -40,7 +45,7 @@ const GroupsPage = () => {
             </div>
           )}
 
-          {!isLoading && groups.length > 0 && (
+          {groups.length > 0 && (
             <>
               {groups.map((group) => {
                 return (
@@ -55,7 +60,19 @@ const GroupsPage = () => {
             </>
           )}
 
-          {!isLoading && groups.length === 0 && <h3>You have no groups yet</h3>}
+          {!isLoading && groups.length === 0 && (
+            <div className="no-groups-message">
+              <h3>You have no groups yet.</h3>
+              <p>Tap the "+" button to create a new group.</p>
+              <i className="fa-solid fa-arrow-down-long fa-4x "></i>
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="error-message">
+              <h3>{errorMessage}</h3>
+            </div>
+          )}
 
           <button
             onClick={handleCreateBtn}

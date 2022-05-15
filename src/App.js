@@ -48,25 +48,24 @@ function App() {
               </IsPrivate>
             }
           />
+          <Route
+            path="/login"
+            element={
+              <IsAnonymous>
+                <LoginPage />
+              </IsAnonymous>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <IsAnonymous>
+                <SignupPage />
+              </IsAnonymous>
+            }
+          />
+          <Route path="*" element={<Navigate to="/groups" replace />} />
         </Route>
-
-        <Route
-          path="/login"
-          element={
-            <IsAnonymous>
-              <LoginPage />
-            </IsAnonymous>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <IsAnonymous>
-              <SignupPage />
-            </IsAnonymous>
-          }
-        />
-        <Route path="*" element={<Navigate to="/groups" replace />} />
       </Routes>
     </div>
   );

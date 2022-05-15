@@ -26,7 +26,13 @@ const ExpensesList = ({ currency }) => {
 
   return (
     <div className="expenses-list">
-      {expenses?.length === 0 && <p>There are no expenses in this group</p>}
+      {!isLoading && expenses?.length === 0 && (
+        <div className="no-expenses-message">
+          <h3>This group is empty.</h3>
+          <p>Tap the "+" button to add a new expense.</p>
+          <i className="fa-solid fa-arrow-down-long fa-4x "></i>
+        </div>
+      )}
       {expenses?.map((expense) => (
         <ExpenseCard
           key={expense._id}

@@ -39,18 +39,20 @@ label {
 }
 
 .delete-btn {
+  background-color: white;
   color: red;
   border: none;
   width: 100%;
   border-radius: 4px;
-  margin: 1rem 0;
+  margin-top: 1rem;
 }
-
 .save-btn {
+  background-color: white;
   color: blue;
   border: none;
   width: 100%;
   border-radius: 4px;
+  margin-top: 1rem;
 }
 
 h1 {
@@ -114,6 +116,35 @@ h1 {
   background-color: black;
   color: white;
   border-radius: 4px;
+}
+
+.no-groups-message {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.no-expenses-message {
+  text-align: center;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.no-reimbursements-message {
+  text-align: center;
+}
+
+.error-message {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
 }
 
 input::-webkit-outer-spin-button,

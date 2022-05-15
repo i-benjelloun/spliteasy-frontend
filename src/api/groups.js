@@ -12,9 +12,22 @@ const getGroups = async () => {
     const {
       data: { groups },
     } = await service.request(config);
-    return groups;
+
+    if (groups) {
+      return {
+        success: true,
+        groups: groups,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
   } catch (err) {
-    console.error(err);
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
   }
 };
 

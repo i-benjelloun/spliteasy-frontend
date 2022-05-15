@@ -41,6 +41,12 @@ const GroupByIdPage = () => {
         </div>
       )}
 
+      {errorMessage && (
+        <div className="error-message">
+          <h3>{errorMessage}</h3>
+        </div>
+      )}
+
       {(pageStatus === 'expenses' || pageStatus === 'balances') && (
         <GroupHeader
           group={group}

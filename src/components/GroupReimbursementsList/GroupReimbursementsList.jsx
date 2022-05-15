@@ -9,7 +9,6 @@ const GroupReimbursementsList = ({
 }) => {
   return (
     <div className="group-reimbursements-list">
-      {reimbursements.length === 0 && <p>This group is all set 🎉</p>}
       {reimbursements.map((reimbursement, index) => (
         <GroupReimbursementsItem
           key={index}
