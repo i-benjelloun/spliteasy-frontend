@@ -9,6 +9,8 @@ const GroupsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [pageStatus, setPageStatus] = useState('groups');
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [archivedFilter, setArchivedFilter] = useState(false);
+  const [filteredGroups, setFilteredGroups] = useState([]);
 
   const getGroupsData = async () => {
     const { groups, success, errorMessage } = await getGroups();
@@ -18,6 +20,30 @@ const GroupsPage = () => {
     } else {
       setErrorMessage(errorMessage);
     }
+  };
+
+  // Filter groups based on archived status
+  useEffect(() => {
+    if (groups.length > 0) {
+      let filteredGroups = [];
+      if (archivedFilter) {
+        filteredGroups = groups.filter((group) => {
+          return group.isArchived === true;
+        });
+      } else {
+        filteredGroups = groups.filter((group) => {
+          return group.isArchived === false;
+        });
+      }
+      setFilteredGroups(filteredGroups);
+    }
+  }, [groups, archivedFilter, pageStatus]);
+
+  const groupsLeft = (groups?.length || 0) - (filteredGroups?.length || 0);
+
+  // Handle archived filter
+  const handleArchivedFilter = () => {
+    setArchivedFilter(!archivedFilter);
   };
 
   // Get groups data
@@ -37,7 +63,14 @@ const GroupsPage = () => {
       )}
       {pageStatus === 'groups' && (
         <section className="groups-page">
-          <h1>Groups</h1>
+          <div className="full-width">
+            <h1>Groups</h1>
+            <button className="btn btn-filter" onClick={handleArchivedFilter}>
+              {archivedFilter
+                ? `Active (${groupsLeft})`
+                : `Archived (${groupsLeft})`}
+            </button>
+          </div>
 
           {isLoading && (
             <div className="spinner">
@@ -47,13 +80,14 @@ const GroupsPage = () => {
 
           {groups.length > 0 && (
             <>
-              {groups.map((group) => {
+              {filteredGroups.map((group) => {
                 return (
                   <GroupCard
                     key={group._id}
                     groupId={group._id}
                     title={group.title}
                     category={group.category}
+                    isArchived={group.isArchived}
                   />
                 );
               })}
@@ -70,7 +104,7 @@ const GroupsPage = () => {
 
           {errorMessage && (
             <div className="error-message">
-              <h3>{errorMessage}</h3>
+              <h1>{errorMessage}</h1>
             </div>
           )}
 

@@ -3,9 +3,12 @@ import './GroupHeader.css';
 import { AuthContext } from '../../context/auth.context';
 import toast, { Toaster } from 'react-hot-toast';
 import encryptId from '../../utils/encryptId';
+import { archiveGroup } from '../../api/groups';
+import { useNavigate } from 'react-router-dom';
 
 const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Handle edit button
   const handleEditBtn = () => {
@@ -34,15 +37,36 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
     toast.success('Link copied to clipboard');
   };
 
+  // Handle archive button
+  const handleArchiveBtn = async (e) => {
+    e.preventDefault();
+    if (window.confirm('Confirm group archiving ?')) {
+      const { success, errorMessage } = await archiveGroup(
+        group?._id.toString()
+      );
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        navigate('/groups');
+      }
+    }
+  };
+
   return (
     <div className="group-header">
       <div className="full-width">
-        <h1 className="group-title">{group?.title}</h1>
-        {user._id === group?.owner._id.toString() && (
-          <button onClick={handleEditBtn} className="icon-btn">
-            <i className="fa-solid fa-pen-to-square fa-2x"></i>
-          </button>
-        )}
+        <div className="title-edit">
+          <h1 className="group-title">{group?.title} </h1>
+          {user._id === group?.owner._id.toString() && (
+            <button onClick={handleEditBtn} className="icon-btn">
+              <i className="fa-solid fa-pen-to-square fa-2x"></i>
+            </button>
+          )}
+        </div>
+
+        <button onClick={handleArchiveBtn} className="icon-btn" type="button">
+          <i className="fa-solid fa-box-archive fa-2x"></i>
+        </button>
       </div>
       <ul className="group-header-members">
         {group?.members.map((member, index) => (

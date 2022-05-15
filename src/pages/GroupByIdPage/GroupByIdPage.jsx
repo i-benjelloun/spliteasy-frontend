@@ -43,52 +43,56 @@ const GroupByIdPage = () => {
 
       {errorMessage && (
         <div className="error-message">
-          <h3>{errorMessage}</h3>
+          <h1>{errorMessage}</h1>
         </div>
       )}
 
-      {(pageStatus === 'expenses' || pageStatus === 'balances') && (
-        <GroupHeader
-          group={group}
-          pageStatus={pageStatus}
-          setPageStatus={setPageStatus}
-        />
-      )}
-
-      {pageStatus === 'expenses' && (
+      {group && (
         <>
-          <ExpensesList groupId={groupId} currency={group?.currency} />
-          <button
-            type="button"
-            onClick={handleCreateExpenseBtn}
-            className="create-btn create-expense"
-          >
-            <i className="fa-solid fa-circle-plus fa-4x"></i>
-          </button>
+          {(pageStatus === 'expenses' || pageStatus === 'balances') && (
+            <GroupHeader
+              group={group}
+              pageStatus={pageStatus}
+              setPageStatus={setPageStatus}
+            />
+          )}
+
+          {pageStatus === 'expenses' && (
+            <>
+              <ExpensesList groupId={groupId} currency={group?.currency} />
+              <button
+                type="button"
+                onClick={handleCreateExpenseBtn}
+                className="create-btn create-expense"
+              >
+                <i className="fa-solid fa-circle-plus fa-4x"></i>
+              </button>
+            </>
+          )}
+
+          {pageStatus === 'balances' && (
+            <GroupBalances
+              currency={group?.currency}
+              setPageStatus={setPageStatus}
+            />
+          )}
+
+          {pageStatus === 'groupForm' && (
+            <GroupForm
+              status={'edit'}
+              setPageStatus={setPageStatus}
+              group={group}
+            />
+          )}
+
+          {pageStatus === 'expenseForm' && (
+            <ExpenseForm
+              group={group}
+              status={'create'}
+              setPageStatus={setPageStatus}
+            />
+          )}
         </>
-      )}
-
-      {pageStatus === 'balances' && (
-        <GroupBalances
-          currency={group?.currency}
-          setPageStatus={setPageStatus}
-        />
-      )}
-
-      {pageStatus === 'groupForm' && (
-        <GroupForm
-          status={'edit'}
-          setPageStatus={setPageStatus}
-          group={group}
-        />
-      )}
-
-      {pageStatus === 'expenseForm' && (
-        <ExpenseForm
-          group={group}
-          status={'create'}
-          setPageStatus={setPageStatus}
-        />
       )}
     </div>
   );

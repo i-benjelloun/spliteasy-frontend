@@ -11,6 +11,7 @@ const ExpenseTitleInput = ({ handleTitleChange, status, defaultValue }) => {
         name="title"
         placeholder="Enter expense title"
         defaultValue={status === 'edit' ? defaultValue : ''}
+        maxLength="50"
         required
       />
     </div>
