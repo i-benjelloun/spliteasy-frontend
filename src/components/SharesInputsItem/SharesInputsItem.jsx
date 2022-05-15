@@ -68,9 +68,9 @@ const SharesInputsItem = ({
         />
         <label>{member.firstName}</label>
       </div>
-      <div className="shares-input-field">
+      <div className="shares-input-field amount-shares-input">
         <input
-          className="form-input shares-input middle-input"
+          className="form-input shares-input"
           type="number"
           min="0"
           value={numberOfShares}
@@ -79,9 +79,10 @@ const SharesInputsItem = ({
           required
         />
       </div>
-      <div className="shares-input-field">
+      <div className="shares-input-field amount-shares-input">
+        <span>{getSymbolFromCurrency(currency)}</span>
         <input
-          className="form-input shares-input"
+          className="form-input shares-input "
           type="number"
           min="0"
           step="0.01"
@@ -90,7 +91,6 @@ const SharesInputsItem = ({
           disabled={splitMethod !== 'manually'}
           required
         />
-        <span>{getSymbolFromCurrency(currency)}</span>
       </div>
     </div>
   );
