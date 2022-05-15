@@ -1,9 +1,8 @@
 // src/components/Navbar.js
 
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/auth.context';
-import { useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
@@ -11,6 +10,7 @@ function Navbar() {
   // the values from AuthContext.Provider `value` prop
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   //  Update the rendering logic to display different content
   //  depending on the user being logged in or not
@@ -19,18 +19,27 @@ function Navbar() {
       {isLoggedIn && (
         <>
           {location.pathname !== '/groups' && (
-            <Link className="text-link" to="/groups">
-              <button className="btn">Groups</button>
-            </Link>
+            <button
+              onClick={() => {
+                navigate(-1);
+              }}
+              className="icon-btn back-btn"
+            >
+              <i className="fa-solid fa-angle-left fa-2x"></i>
+            </button>
           )}
-
-          <button className="btn" onClick={logOutUser}>
-            Log Out
-          </button>
         </>
       )}
+      <Link className="text-link" to="/groups">
+        <h1 className="app-logo">SplitEasy</h1>
+      </Link>
+      {isLoggedIn && (
+        <button onClick={logOutUser} className="icon-btn logout-btn">
+          <i className="fa-solid fa-right-from-bracket fa-2x"></i>
+        </button>
+      )}
 
-      {!isLoggedIn && (
+      {/* {!isLoggedIn && (
         <>
           <Link className="text-link" to="/signup">
             <button className="btn">Sign Up</button>
@@ -39,7 +48,7 @@ function Navbar() {
             <button className="btn">Log In</button>
           </Link>
         </>
-      )}
+      )} */}
     </div>
   );
 }

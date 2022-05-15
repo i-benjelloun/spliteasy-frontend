@@ -1,21 +1,62 @@
-.group-header ul {
+.group-header-members {
   list-style-type: none;
   display: flex;
   padding: 0;
-  justify-content: center;
+  margin-top: 0;
 }
 
-.group-header li {
+.group-header-members li {
   padding: 0 8px;
   border-right: 1px solid black;
   font-weight: bold;
+  font-size: 0.7rem;
 }
 
-.group-header ul > li:last-child {
+.group-header-members > li:last-child {
   border: none;
+}
+
+.group-header-members > li:first-child {
+  padding-left: 0;
 }
 
 .group-header-btns {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.group-title {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 50px;
+  background-color: black;
+  color: white;
+  height: 2rem;
+  margin: 1rem 2rem 2rem 2rem;
+}
+
+.nav div {
+  cursor: pointer;
+}
+
+.share-btn {
+  text-align: center;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 1rem;
+  margin: 1rem;
+  background-color: white;
+}
+
+.view-selected {
+  font-weight: bold;
 }

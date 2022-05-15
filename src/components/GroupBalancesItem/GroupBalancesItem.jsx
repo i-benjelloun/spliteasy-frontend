@@ -14,11 +14,11 @@ const GroupBalancesItem = ({ balance, currency }) => {
   return (
     <div className="group-balances-item">
       <h4>{balance.user.firstName}</h4>
-      <p>
+      <h4>
         <span>{symbol}</span>
         {getSymbolFromCurrency(currency)}
         {Math.abs(balance.balance)}
-      </p>
+      </h4>
     </div>
   );
 };

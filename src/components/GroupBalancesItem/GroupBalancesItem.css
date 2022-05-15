@@ -1,10 +1,10 @@
 .group-balances-item {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   border-bottom: 1px black solid;
 }
 
 .group-balances-item * {
-  margin-bottom: 0.5rem;
+  margin: 1rem 0;
 }

@@ -60,7 +60,7 @@ const SharesInputsItem = ({
 
   return (
     <div className="shares-inputs-item">
-      <div>
+      <div className="shares-input-field">
         <input
           type="checkbox"
           checked={isSelected}
@@ -68,7 +68,7 @@ const SharesInputsItem = ({
         />
         <label>{member.firstName}</label>
       </div>
-      <div>
+      <div className="shares-input-field">
         <input
           className="form-input shares-input middle-input"
           type="number"
@@ -78,6 +78,8 @@ const SharesInputsItem = ({
           disabled={splitMethod !== 'shares'}
           required
         />
+      </div>
+      <div className="shares-input-field">
         <input
           className="form-input shares-input"
           type="number"

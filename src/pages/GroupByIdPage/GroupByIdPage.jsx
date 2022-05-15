@@ -6,7 +6,6 @@ import ExpensesList from '../../components/ExpensesList/ExpensesList';
 import GroupBalances from '../../components/GroupBalances/GroupBalances';
 import GroupForm from '../../components/GroupForm/GroupForm';
 import GroupHeader from '../../components/GroupHeader/GroupHeader';
-import Navbar from '../../components/Navbar/Navbar';
 import './GroupByIdPage.css';
 
 const GroupByIdPage = () => {
@@ -35,60 +34,63 @@ const GroupByIdPage = () => {
   }, [groupId, pageStatus]);
 
   return (
-    <>
-      <Navbar />
+    <div className="group-by-id-page">
       {isLoading && (
         <div className="spinner">
           <i className="fas fa-spinner fa-spin fa-3x"></i>
         </div>
       )}
 
-      <div className="group-by-id-page">
-        {(pageStatus === 'expenses' || pageStatus === 'balances') && (
-          <GroupHeader
-            group={group}
-            pageStatus={pageStatus}
-            setPageStatus={setPageStatus}
-          />
-        )}
+      {errorMessage && (
+        <div className="error-message">
+          <h3>{errorMessage}</h3>
+        </div>
+      )}
 
-        {pageStatus === 'expenses' && (
-          <>
-            <ExpensesList groupId={groupId} currency={group?.currency} />
-            <button
-              type="button"
-              onClick={handleCreateExpenseBtn}
-              className="create-btn create-expense"
-            >
-              <i className="fa-solid fa-circle-plus fa-4x"></i>
-            </button>
-          </>
-        )}
+      {(pageStatus === 'expenses' || pageStatus === 'balances') && (
+        <GroupHeader
+          group={group}
+          pageStatus={pageStatus}
+          setPageStatus={setPageStatus}
+        />
+      )}
 
-        {pageStatus === 'balances' && (
-          <GroupBalances
-            currency={group?.currency}
-            setPageStatus={setPageStatus}
-          />
-        )}
+      {pageStatus === 'expenses' && (
+        <>
+          <ExpensesList groupId={groupId} currency={group?.currency} />
+          <button
+            type="button"
+            onClick={handleCreateExpenseBtn}
+            className="create-btn create-expense"
+          >
+            <i className="fa-solid fa-circle-plus fa-4x"></i>
+          </button>
+        </>
+      )}
 
-        {pageStatus === 'groupForm' && (
-          <GroupForm
-            status={'edit'}
-            setPageStatus={setPageStatus}
-            group={group}
-          />
-        )}
+      {pageStatus === 'balances' && (
+        <GroupBalances
+          currency={group?.currency}
+          setPageStatus={setPageStatus}
+        />
+      )}
 
-        {pageStatus === 'expenseForm' && (
-          <ExpenseForm
-            group={group}
-            status={'create'}
-            setPageStatus={setPageStatus}
-          />
-        )}
-      </div>
-    </>
+      {pageStatus === 'groupForm' && (
+        <GroupForm
+          status={'edit'}
+          setPageStatus={setPageStatus}
+          group={group}
+        />
+      )}
+
+      {pageStatus === 'expenseForm' && (
+        <ExpenseForm
+          group={group}
+          status={'create'}
+          setPageStatus={setPageStatus}
+        />
+      )}
+    </div>
   );
 };
 
