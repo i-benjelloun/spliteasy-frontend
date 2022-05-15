@@ -188,6 +188,54 @@ const joinGroup = async (encryptedId) => {
   }
 };
 
+const archiveGroup = async (groupId) => {
+  const config = {
+    method: 'post',
+    url: `/groups/${groupId}/archive`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { archivedGroup },
+    } = await service.request(config);
+
+    if (archivedGroup) {
+      return {
+        success: true,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
+const restoreGroup = async (groupId) => {
+  const config = {
+    method: 'delete',
+    url: `/groups/${groupId}/restore`,
+    headers: getHeadersWithAuth(),
+  };
+  try {
+    const {
+      data: { restoredGroup },
+    } = await service.request(config);
+
+    if (restoredGroup) {
+      return {
+        success: true,
+      };
+    }
+  } catch (err) {
+    return {
+      success: false,
+      errorMessage: err?.response?.data?.errorMessage,
+    };
+  }
+};
+
 export {
   getGroups,
   createGroup,
@@ -196,4 +244,6 @@ export {
   deleteGroup,
   getGroupBalances,
   joinGroup,
+  archiveGroup,
+  restoreGroup,
 };

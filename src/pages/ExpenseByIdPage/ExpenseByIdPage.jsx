@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getExpenseById } from '../../api/expenses';
-import toast, { Toaster } from 'react-hot-toast';
 import ExpenseHeader from '../../components/ExpenseHeader/ExpenseHeader';
 import ExpenseSharesList from '../../components/ExpenseSharesList/ExpenseSharesList';
 import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
@@ -11,6 +10,7 @@ const ExpenseByIdPage = () => {
   const [expense, setExpense] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [pageStatus, setPageStatus] = useState('expense');
+  const [errorMessage, setErrorMessage] = useState(undefined);
 
   useEffect(() => {
     const getData = async () => {
@@ -22,7 +22,7 @@ const ExpenseByIdPage = () => {
       if (success) {
         setExpense(expense);
       } else {
-        toast.error(errorMessage);
+        setErrorMessage(errorMessage);
       }
     };
     getData();
@@ -54,12 +54,11 @@ const ExpenseByIdPage = () => {
         />
       )}
 
-      <Toaster
-        position="bottom-center"
-        reverseOrder={false}
-        expense={expense}
-        setPageStatus={setPageStatus}
-      />
+      {errorMessage && (
+        <div className="error-message">
+          <h1>{errorMessage}</h1>
+        </div>
+      )}
     </div>
   );
 };

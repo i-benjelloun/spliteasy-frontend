@@ -55,6 +55,15 @@ label {
   margin-top: 1rem;
 }
 
+.archive-btn {
+  background-color: gray;
+  color: white;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
 h1 {
   font-size: 2rem;
   margin: 0;
@@ -109,6 +118,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  gap: 1rem;
 }
 
 .btn-selected {
@@ -144,7 +154,6 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: red;
 }
 
 input::-webkit-outer-spin-button,

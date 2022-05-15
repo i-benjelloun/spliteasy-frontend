@@ -13,6 +13,8 @@ const GroupTitleInput = ({ title, handleTitleChange }) => {
         name="title"
         value={title}
         onChange={handleTitleChange}
+        maxLength="50"
+        required
       />
     </div>
   );

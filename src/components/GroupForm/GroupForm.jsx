@@ -69,7 +69,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
 
   const handleDeleteBtn = async (e) => {
     e.preventDefault();
-    if (window.confirm('Confirm groupe deletion ?')) {
+    if (window.confirm('Do you want to permanently delete this group ?')) {
       const { success, errorMessage } = await deleteGroup(
         group?._id.toString()
       );

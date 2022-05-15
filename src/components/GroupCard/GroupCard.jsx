@@ -1,15 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { restoreGroup } from '../../api/groups';
 import './GroupCard.css';
 
-const GroupCard = ({ groupId, title, category }) => {
+const GroupCard = ({ groupId, title, category, isArchived }) => {
+  const navigate = useNavigate();
+
+  const handleGroupCardClick = async () => {
+    if (!isArchived) {
+      navigate(`/groups/${groupId}`);
+    } else {
+      if (window.confirm('Do you want to restore this group ?')) {
+        const { success, errorMessage } = await restoreGroup(groupId);
+        if (!success) {
+          toast.error(errorMessage);
+        } else {
+          navigate(`/groups/${groupId}`);
+        }
+      }
+    }
+  };
   return (
-    <Link className="text-link" to={`/groups/${groupId}`}>
-      <div className="group-card">
-        <h3>{title}</h3>
-        <p>{category}</p>
-      </div>
-    </Link>
+    <div className="group-card" onClick={handleGroupCardClick}>
+      <h3>{title}</h3>
+      <p>{category}</p>
+      <Toaster position="bottom-center" reverseOrder={false} />
+    </div>
   );
 };
 
