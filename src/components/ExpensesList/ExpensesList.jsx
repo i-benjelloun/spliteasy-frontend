@@ -5,13 +5,12 @@ import ExpenseCard from '../ExpenseCard/ExpenseCard';
 import ExpenseSearchBar from '../ExpenseSearchBar/ExpenseSearchBar';
 import './ExpensesList.css';
 
-const ExpensesList = ({ currency }) => {
+const ExpensesList = ({ currency, setErrorMessage }) => {
   const { groupId } = useParams();
   const [expenses, setExpenses] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState('');
-  const [errorMessage, setErrorMessage] = useState(undefined);
 
   // Get group expenses data
   useEffect(() => {

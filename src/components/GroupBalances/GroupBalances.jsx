@@ -4,12 +4,11 @@ import { getGroupBalances } from '../../api/groups';
 import GroupBalancesList from '../GroupBalancesList/GroupBalancesList';
 import GroupReimbursementsList from '../GroupReimbursementsList/GroupReimbursementsList';
 
-const GroupBalances = ({ currency, setPageStatus }) => {
+const GroupBalances = ({ currency, setPageStatus, setErrorMessage }) => {
   const { groupId } = useParams();
   const [balances, setBalances] = useState([]);
   const [reimbursements, setReimbursements] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(undefined);
 
   useEffect(() => {
     const getBalancesData = async () => {
@@ -31,12 +30,6 @@ const GroupBalances = ({ currency, setPageStatus }) => {
       {isLoading && (
         <div className="spinner">
           <i className="fas fa-spinner fa-spin fa-3x"></i>
-        </div>
-      )}
-
-      {errorMessage && (
-        <div className="error-message">
-          <h3>{errorMessage}</h3>
         </div>
       )}
 

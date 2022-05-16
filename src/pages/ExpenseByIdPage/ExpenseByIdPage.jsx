@@ -37,34 +37,38 @@ const ExpenseByIdPage = () => {
         </div>
       )}
 
-      {pageStatus === 'expense' && (
-        <>
-          <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
-          <ExpenseSharesList
-            shares={expense?.shares}
-            currency={expense?.group.currency}
-          />
-          <ExpenseComments
-            groupId={groupId}
-            expenseId={expenseId}
-            setErrorMessage={setErrorMessage}
-          />
-        </>
-      )}
-
-      {pageStatus === 'expenseForm' && (
-        <ExpenseForm
-          group={expense?.group}
-          expense={expense}
-          status={'edit'}
-          setPageStatus={setPageStatus}
-        />
-      )}
-
       {errorMessage && (
         <div className="error-message">
           <h1>{errorMessage}</h1>
         </div>
+      )}
+
+      {expense && (
+        <>
+          {pageStatus === 'expense' && (
+            <>
+              <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
+              <ExpenseSharesList
+                shares={expense?.shares}
+                currency={expense?.group.currency}
+              />
+              <ExpenseComments
+                groupId={groupId}
+                expenseId={expenseId}
+                setErrorMessage={setErrorMessage}
+              />
+            </>
+          )}
+
+          {pageStatus === 'expenseForm' && (
+            <ExpenseForm
+              group={expense?.group}
+              expense={expense}
+              status={'edit'}
+              setPageStatus={setPageStatus}
+            />
+          )}
+        </>
       )}
     </div>
   );
