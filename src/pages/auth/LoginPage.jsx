@@ -1,15 +1,15 @@
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/auth.context';
-const { login } = require('../../api/auth');
+import toast, { Toaster } from 'react-hot-toast';
+import { login } from '../../api/auth';
+import './LoginPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(undefined);
   const { isLoggedIn, authenticateUser } = useContext(AuthContext);
   const location = useLocation();
-
   const navigate = useNavigate();
 
   if (isLoggedIn) {
@@ -24,7 +24,7 @@ function LoginPage() {
     const { isLoggedIn, errorMessage } = await login(requestBody);
 
     if (!isLoggedIn) {
-      setErrorMessage(errorMessage);
+      toast.error(errorMessage);
     } else {
       await authenticateUser();
       if (location.state?.from) {
@@ -36,47 +36,49 @@ function LoginPage() {
   };
 
   return (
-    <div
-      className="Login
-    Page"
-    >
-      <h1>Log In</h1>
+    <div className="login-page">
+      <div className="login-page-header">
+        <h1 className="app-logo app-logo-header">SplitEasy</h1>
+        <h2>Welcome back !</h2>
+      </div>
 
-      <form onSubmit={handleLoginSubmit}>
+      <form className="login-form" onSubmit={handleLoginSubmit}>
         <div className="form-label-input">
-          <label>Email</label>
           <input
             className="form-input"
             type="email"
             name="email"
-            value={email}
             onChange={handleEmail}
+            placeholder="Email"
             required
           />
         </div>
 
         <div className="form-label-input">
-          <label>Password</label>
           <input
             className="form-input"
             type="password"
             name="password"
-            value={password}
             onChange={handlePassword}
+            placeholder="Password"
             required
           />
         </div>
 
-        <button className="btn" type="submit">
+        <button className="btn login-btn" type="submit">
           Log In
         </button>
       </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>Don't have an account yet ?</p>
-      <Link className="text-link" to={'/signup'}>
-        Sign Up
-      </Link>
+      <div className="to-signup">
+        <p>
+          Not a member ?{' '}
+          <span>
+            <Link to={'/signup'}>Register now</Link>
+          </span>
+        </p>
+      </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { getExpenseById } from '../../api/expenses';
 import ExpenseHeader from '../../components/ExpenseHeader/ExpenseHeader';
 import ExpenseSharesList from '../../components/ExpenseSharesList/ExpenseSharesList';
 import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
+import ExpenseComments from '../../components/ExpenseComments/ExpenseComments';
 
 const ExpenseByIdPage = () => {
   const { groupId, expenseId } = useParams();
@@ -35,29 +36,39 @@ const ExpenseByIdPage = () => {
           <i className="fas fa-spinner fa-spin fa-3x"></i>
         </div>
       )}
-      {pageStatus === 'expense' && (
-        <>
-          <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
-          <ExpenseSharesList
-            shares={expense?.shares}
-            currency={expense?.group.currency}
-          />
-        </>
-      )}
-
-      {pageStatus === 'expenseForm' && (
-        <ExpenseForm
-          group={expense?.group}
-          expense={expense}
-          status={'edit'}
-          setPageStatus={setPageStatus}
-        />
-      )}
 
       {errorMessage && (
         <div className="error-message">
           <h1>{errorMessage}</h1>
         </div>
+      )}
+
+      {expense && (
+        <>
+          {pageStatus === 'expense' && (
+            <>
+              <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
+              <ExpenseSharesList
+                shares={expense?.shares}
+                currency={expense?.group.currency}
+              />
+              <ExpenseComments
+                groupId={groupId}
+                expenseId={expenseId}
+                setErrorMessage={setErrorMessage}
+              />
+            </>
+          )}
+
+          {pageStatus === 'expenseForm' && (
+            <ExpenseForm
+              group={expense?.group}
+              expense={expense}
+              status={'edit'}
+              setPageStatus={setPageStatus}
+            />
+          )}
+        </>
       )}
     </div>
   );

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getExpenses } from '../../api/expenses';
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
+import ExpenseSearchBar from '../ExpenseSearchBar/ExpenseSearchBar';
 import './ExpensesList.css';
 
-const ExpensesList = ({ currency }) => {
+const ExpensesList = ({ currency, setErrorMessage }) => {
   const { groupId } = useParams();
   const [expenses, setExpenses] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState('');
 
   // Get group expenses data
   useEffect(() => {
@@ -24,6 +26,22 @@ const ExpensesList = ({ currency }) => {
     getGroupExpensesData();
   }, [groupId]);
 
+  // SEARCH BAR HANDLER
+  const handleSearch = (event) => {
+    const { value } = event.target;
+    setSearchQuery(value);
+  };
+
+  // UPDATING SEARCH RESULT
+  useEffect(() => {
+    if (expenses?.length > 0) {
+      const result = expenses.filter((expense) => {
+        return expense.title.toUpperCase().includes(searchQuery.toUpperCase());
+      });
+      setSearchResult(result);
+    }
+  }, [searchQuery, expenses]);
+
   return (
     <div className="expenses-list">
       {!isLoading && expenses?.length === 0 && (
@@ -33,14 +51,22 @@ const ExpensesList = ({ currency }) => {
           <i className="fa-solid fa-arrow-down-long fa-4x "></i>
         </div>
       )}
-      {expenses?.map((expense) => (
-        <ExpenseCard
-          key={expense._id}
-          groupId={groupId}
-          expense={expense}
-          currency={currency}
-        />
-      ))}
+      {searchResult && (
+        <>
+          <ExpenseSearchBar
+            searchQuery={searchQuery}
+            handleSearch={handleSearch}
+          />
+          {searchResult?.map((expense) => (
+            <ExpenseCard
+              key={expense._id}
+              groupId={groupId}
+              expense={expense}
+              currency={currency}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };

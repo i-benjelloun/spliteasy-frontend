@@ -40,32 +40,33 @@ function App() {
               </IsPrivate>
             }
           />
-          <Route
-            path="/groups/:encryptedId/join"
-            element={
-              <IsPrivate>
-                <GroupJoin />
-              </IsPrivate>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <IsAnonymous>
-                <LoginPage />
-              </IsAnonymous>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <IsAnonymous>
-                <SignupPage />
-              </IsAnonymous>
-            }
-          />
+
           <Route path="*" element={<Navigate to="/groups" replace />} />
         </Route>
+        <Route
+          path="/groups/:encryptedId/join"
+          element={
+            <IsPrivate>
+              <GroupJoin />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <IsAnonymous>
+              <LoginPage />
+            </IsAnonymous>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <IsAnonymous>
+              <SignupPage />
+            </IsAnonymous>
+          }
+        />
       </Routes>
     </div>
   );

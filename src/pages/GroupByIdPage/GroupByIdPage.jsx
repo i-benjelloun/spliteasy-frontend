@@ -59,7 +59,11 @@ const GroupByIdPage = () => {
 
           {pageStatus === 'expenses' && (
             <>
-              <ExpensesList groupId={groupId} currency={group?.currency} />
+              <ExpensesList
+                groupId={groupId}
+                currency={group?.currency}
+                setErrorMessage={setErrorMessage}
+              />
               <button
                 type="button"
                 onClick={handleCreateExpenseBtn}
@@ -74,6 +78,7 @@ const GroupByIdPage = () => {
             <GroupBalances
               currency={group?.currency}
               setPageStatus={setPageStatus}
+              setErrorMessage={setErrorMessage}
             />
           )}
 
