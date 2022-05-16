@@ -1,0 +1,13 @@
+.add-expense-bar {
+  display: flex;
+}
+
+.add-expense-bar > div {
+  flex-basis: 100%;
+  border: 1px gray solid;
+  display: flex;
+}
+
+.expense-comments {
+  margin-top: 3rem;
+}

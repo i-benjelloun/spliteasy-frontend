@@ -1,7 +1,7 @@
 import React from 'react';
 import './ExpenseSearchBar.css';
 
-const ExpenseSearchBar = ({ searchData, handleSearch }) => {
+const ExpenseSearchBar = ({ handleSearch }) => {
   return (
     <div className="expense-search-bar">
       <div className="form-input">

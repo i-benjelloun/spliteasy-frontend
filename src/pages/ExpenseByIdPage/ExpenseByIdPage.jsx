@@ -4,6 +4,7 @@ import { getExpenseById } from '../../api/expenses';
 import ExpenseHeader from '../../components/ExpenseHeader/ExpenseHeader';
 import ExpenseSharesList from '../../components/ExpenseSharesList/ExpenseSharesList';
 import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
+import ExpenseComments from '../../components/ExpenseComments/ExpenseComments';
 
 const ExpenseByIdPage = () => {
   const { groupId, expenseId } = useParams();
@@ -35,12 +36,18 @@ const ExpenseByIdPage = () => {
           <i className="fas fa-spinner fa-spin fa-3x"></i>
         </div>
       )}
+
       {pageStatus === 'expense' && (
         <>
           <ExpenseHeader expense={expense} setPageStatus={setPageStatus} />
           <ExpenseSharesList
             shares={expense?.shares}
             currency={expense?.group.currency}
+          />
+          <ExpenseComments
+            groupId={groupId}
+            expenseId={expenseId}
+            setErrorMessage={setErrorMessage}
           />
         </>
       )}
