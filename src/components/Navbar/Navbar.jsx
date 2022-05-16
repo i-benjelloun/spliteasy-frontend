@@ -6,14 +6,10 @@ import { AuthContext } from '../../context/auth.context';
 import './Navbar.css';
 
 function Navbar() {
-  // Subscribe to the AuthContext to gain access to
-  // the values from AuthContext.Provider `value` prop
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  //  Update the rendering logic to display different content
-  //  depending on the user being logged in or not
   return (
     <div className="navbar">
       {isLoggedIn && (
@@ -38,17 +34,6 @@ function Navbar() {
           <i className="fa-solid fa-right-from-bracket fa-2x"></i>
         </button>
       )}
-
-      {/* {!isLoggedIn && (
-        <>
-          <Link className="text-link" to="/signup">
-            <button className="btn">Sign Up</button>
-          </Link>
-          <Link className="text-link" to="/login">
-            <button className="btn">Log In</button>
-          </Link>
-        </>
-      )} */}
     </div>
   );
 }
