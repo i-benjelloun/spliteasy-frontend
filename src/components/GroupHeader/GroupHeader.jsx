@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import encryptId from '../../utils/encryptId';
 import { archiveGroup } from '../../api/groups';
 import { useNavigate } from 'react-router-dom';
+import GroupsPage from '../../pages/GroupsPage/GroupsPage';
 
 const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
   const { user } = useContext(AuthContext);
@@ -84,6 +85,15 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
           <button onClick={handleShareBtn} className="btn share-btn">
             <i className="fa-solid fa-share-from-square"></i>
             Share
+          </button>
+        )}
+        {group?.members.length === 1 && (
+          <button
+            onClick={() => setPageStatus('members')}
+            type="button"
+            className="btn"
+          >
+            Add Members
           </button>
         )}
       </div>

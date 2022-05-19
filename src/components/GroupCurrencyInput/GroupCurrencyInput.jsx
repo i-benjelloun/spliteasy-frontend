@@ -11,12 +11,10 @@ const GroupCurrencyInput = ({ handleCurrencyChange }) => {
 
   return (
     <div className="form-label-input">
-      <label className="form-label" htmlFor="currency">
-        Currency
-      </label>
       <Select
         closeMenuOnSelect={true}
         onChange={handleCurrencyChange}
+        placeholder={'Currency'}
         options={options}
       />
     </div>

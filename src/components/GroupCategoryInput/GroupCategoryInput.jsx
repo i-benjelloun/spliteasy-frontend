@@ -11,13 +11,11 @@ const GroupCategoryInput = ({ handleCategoryChange }) => {
 
   return (
     <div className="form-label-input">
-      <label className="form-label" htmlFor="category">
-        Category
-      </label>
       <Select
         closeMenuOnSelect={true}
         onChange={handleCategoryChange}
         options={options}
+        placeholder={'Category'}
       />
     </div>
   );

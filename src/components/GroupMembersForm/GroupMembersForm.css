@@ -1,0 +1,8 @@
+.friends-item {
+  display: flex;
+}
+
+.selected-members {
+  display: flex;
+  gap: 1rem;
+}

@@ -4,9 +4,6 @@ import './GroupTitleInput.css';
 const GroupTitleInput = ({ title, handleTitleChange }) => {
   return (
     <div className="form-label-input">
-      <label className="form-label" htmlFor="title">
-        Title
-      </label>
       <input
         className="form-input"
         type="text"
@@ -14,6 +11,7 @@ const GroupTitleInput = ({ title, handleTitleChange }) => {
         value={title}
         onChange={handleTitleChange}
         maxLength="50"
+        placeholder="Title"
         required
       />
     </div>

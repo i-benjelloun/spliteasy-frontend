@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { createGroup, deleteGroup, updateGroup } from '../../api/groups';
 import GroupCategoryInput from '../GroupCategoryInput/GroupCategoryInput';
 import GroupCurrencyInput from '../GroupCurrencyInput/GroupCurrencyInput';
-import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
+// import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
 import GroupTitleInput from '../GroupTitleInput/GroupTitleInput';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
@@ -16,15 +16,15 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
   const [category, setCategory] = useState('');
-  const [members, setMembers] = useState(
-    status === 'edit'
-      ? group?.members
-          .map((member) => member.email)
-          .filter((member) => {
-            return member !== user.email;
-          })
-      : []
-  );
+  // const [members, setMembers] = useState(
+  //   status === 'edit'
+  //     ? group?.members
+  //         .map((member) => member.email)
+  //         .filter((member) => {
+  //           return member !== user.email;
+  //         })
+  //     : []
+  // );
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -35,9 +35,10 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const handleCategoryChange = (e) => {
     setCategory(e.value);
   };
-  const handleMembersChange = (e) => {
-    setMembers(e.map((member) => member.value));
-  };
+
+  // const handleMembersChange = (e) => {
+  //   setMembers(e.map((member) => member.value));
+  // };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
         title: capitalizeFirstLetter(title),
         currency,
         category,
-        members,
+        // members,
       });
       if (!success) {
         toast.error(errorMessage);
@@ -57,7 +58,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     if (status === 'edit') {
       const { success, errorMessage } = await updateGroup(
         group?._id.toString(),
-        { title: capitalizeFirstLetter(title), members }
+        { title: capitalizeFirstLetter(title) }
       );
       if (!success) {
         toast.error(errorMessage);
@@ -101,25 +102,24 @@ const GroupForm = ({ status, setPageStatus, group }) => {
       </div>
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
+        <GroupCategoryInput
+          category={category}
+          handleCategoryChange={handleCategoryChange}
+        />
 
         {status === 'create' && (
-          <>
-            <GroupCurrencyInput
-              currency={currency}
-              handleCurrencyChange={handleCurrencyChange}
-            />
-            <GroupCategoryInput
-              category={category}
-              handleCategoryChange={handleCategoryChange}
-            />
-          </>
+          <GroupCurrencyInput
+            currency={currency}
+            handleCurrencyChange={handleCurrencyChange}
+          />
         )}
 
-        <GroupMembersInput
+        {/* <GroupMembersInput
           handleMembersChange={handleMembersChange}
           defaultMembers={group?.members}
           status={status}
-        />
+        /> */}
+
         <div className="form-buttons">
           <button className="btn save-btn" type="submit">
             Save
