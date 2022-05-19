@@ -73,6 +73,7 @@ const createGroup = async (body) => {
     if (createdGroup) {
       return {
         success: true,
+        createdGroup: createdGroup,
       };
     }
   } catch (err) {

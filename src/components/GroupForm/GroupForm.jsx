@@ -43,7 +43,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (status === 'create') {
-      const { success, errorMessage } = await createGroup({
+      const { success, createdGroup, errorMessage } = await createGroup({
         title: capitalizeFirstLetter(title),
         currency,
         category,
@@ -52,7 +52,8 @@ const GroupForm = ({ status, setPageStatus, group }) => {
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setPageStatus('groups');
+        navigate(`/groups/${createdGroup._id.toString()}`);
+        //setPageStatus('groups');
       }
     }
     if (status === 'edit') {
