@@ -60,6 +60,7 @@ const GroupByIdPage = () => {
 
           {pageStatus === 'members' && (
             <GroupMembersForm
+              defaultMembers={group?.members}
               setPageStatus={setPageStatus}
               pageStatus={pageStatus}
             />

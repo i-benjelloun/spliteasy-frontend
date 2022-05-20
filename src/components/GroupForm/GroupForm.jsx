@@ -23,15 +23,6 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const [category, setCategory] = useState(
     status === 'edit' ? group?.category : ''
   );
-  // const [members, setMembers] = useState(
-  //   status === 'edit'
-  //     ? group?.members
-  //         .map((member) => member.email)
-  //         .filter((member) => {
-  //           return member !== user.email;
-  //         })
-  //     : []
-  // );
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -43,10 +34,6 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     setCategory(e.value);
   };
 
-  // const handleMembersChange = (e) => {
-  //   setMembers(e.map((member) => member.value));
-  // };
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (status === 'create') {
@@ -54,7 +41,6 @@ const GroupForm = ({ status, setPageStatus, group }) => {
         title: capitalizeFirstLetter(title),
         currency,
         category,
-        // members,
       });
       if (!success) {
         toast.error(errorMessage);
@@ -114,6 +100,12 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     }
   };
 
+  const handleShareBtn = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(group?.joinLink);
+    toast.success('Link copied to clipboard');
+  };
+
   return (
     <div className="group-form-container">
       <div className="group-form-header">
@@ -138,11 +130,25 @@ const GroupForm = ({ status, setPageStatus, group }) => {
           />
         )}
 
-        {/* <GroupMembersInput
-          handleMembersChange={handleMembersChange}
-          defaultMembers={group?.members}
-          status={status}
-        /> */}
+        {status === 'edit' && (
+          <div className="group-form-members">
+            <div className="share-add-members">
+              <div className="group-header-btns">
+                <button onClick={handleShareBtn} className="btn share-btn">
+                  <i className="fa-solid fa-share-from-square"></i>
+                  Share
+                </button>
+                <button
+                  onClick={() => setPageStatus('members')}
+                  type="button"
+                  className="btn share-btn"
+                >
+                  Edit members
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <button className="btn save-btn" type="submit">
           Save
@@ -158,17 +164,20 @@ const GroupForm = ({ status, setPageStatus, group }) => {
           >
             {'Archive'}
           </button>
-          <button
-            onClick={handleDeleteBtn}
-            className="btn delete-btn"
-            type="button"
-          >
-            {'Delete'}
-          </button>
+
+          {group?.owner._id === user._id && (
+            <button
+              onClick={handleDeleteBtn}
+              className="btn delete-btn"
+              type="button"
+            >
+              {'Delete'}
+            </button>
+          )}
         </div>
       )}
 
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

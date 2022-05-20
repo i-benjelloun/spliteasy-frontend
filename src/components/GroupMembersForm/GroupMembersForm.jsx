@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import './GroupMembersForm.css';
 import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
-const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
+const GroupMembersForm = ({ setPageStatus, defaultMembers }) => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [friends, setFriends] = useState([]);
   const [isSelected, setIsSelected] = useState([]);
@@ -36,9 +36,17 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
   // Initialize selected friends
   useEffect(() => {
     if (friends.length) {
-      setIsSelected(new Array(friends.length).fill(false));
+      const isSelected = friends.map((friend) => {
+        const index = defaultMembers.findIndex(
+          (member) => member.email === friend.email
+        );
+        return index === -1 ? false : true;
+      });
+
+      // setIsSelected(new Array(friends.length).fill(false));
+      setIsSelected(isSelected);
     }
-  }, [friends.length]);
+  }, [friends.length, defaultMembers, friends]);
 
   useEffect(() => {
     const selectedFriends = [];
@@ -120,7 +128,11 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
   };
 
   const handleCancelBtn = () => {
-    setPageStatus('expenses');
+    if (defaultMembers.length === 1) {
+      setPageStatus('expenses');
+    } else {
+      setPageStatus('groupForm');
+    }
   };
 
   const handleSubmitMembers = async (e) => {
@@ -241,6 +253,7 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
           </div>
         </>
       )}
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

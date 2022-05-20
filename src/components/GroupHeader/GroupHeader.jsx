@@ -1,15 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './GroupHeader.css';
-import { AuthContext } from '../../context/auth.context';
 import toast, { Toaster } from 'react-hot-toast';
-import { archiveGroup } from '../../api/groups';
-import { useNavigate } from 'react-router-dom';
-import GroupsPage from '../../pages/GroupsPage/GroupsPage';
 
 const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
-
   // Handle edit button
   const handleEditBtn = () => {
     setPageStatus('groupForm');
@@ -74,15 +67,6 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
           </div>
         </div>
       )}
-      {/* {group?.members.length === 1 && (
-          <button
-            onClick={() => setPageStatus('members')}
-            type="button"
-            className="btn"
-          >
-            Add Members
-          </button>
-        )} */}
 
       <div className="nav">
         <div

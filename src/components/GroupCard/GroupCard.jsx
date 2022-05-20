@@ -25,7 +25,7 @@ const GroupCard = ({ groupId, title, category, isArchived }) => {
     <div className="group-card" onClick={handleGroupCardClick}>
       <h3>{title}</h3>
       <p>{category}</p>
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

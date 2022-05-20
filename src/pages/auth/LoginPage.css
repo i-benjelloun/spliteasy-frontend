@@ -25,3 +25,7 @@
 .to-signin {
   text-align: center;
 }
+
+.login-form {
+  padding: 0 0.5rem;
+}

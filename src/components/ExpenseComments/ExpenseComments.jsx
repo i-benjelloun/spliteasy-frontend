@@ -48,6 +48,7 @@ const ExpenseComments = ({ groupId, expenseId, setErrorMessage }) => {
 
   return (
     <div className="expense-comments">
+      <h4>Comments</h4>
       <form onSubmit={handleCommentSubmit}>
         <div className="add-expense-bar">
           <div className="form-input">
@@ -70,7 +71,7 @@ const ExpenseComments = ({ groupId, expenseId, setErrorMessage }) => {
         groupId={groupId}
         expenseId={expenseId}
       />
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
