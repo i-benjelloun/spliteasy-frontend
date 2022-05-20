@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import './GroupHeader.css';
 import { AuthContext } from '../../context/auth.context';
 import toast, { Toaster } from 'react-hot-toast';
-import encryptId from '../../utils/encryptId';
 import { archiveGroup } from '../../api/groups';
 import { useNavigate } from 'react-router-dom';
 import GroupsPage from '../../pages/GroupsPage/GroupsPage';

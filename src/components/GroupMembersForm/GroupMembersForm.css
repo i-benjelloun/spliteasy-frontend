@@ -8,7 +8,8 @@
 .selected-members {
   display: flex;
   gap: 1rem;
-  margin: 1rem 0;
+  margin: 2rem 0;
+  padding: 0 0.5rem;
 }
 
 .add-members-form {
@@ -44,7 +45,7 @@
   height: 30px;
   min-width: 30px;
   min-height: 30px;
-  border: 1px solid black;
+  border: 1px solid gray;
   padding: 8px;
   background-color: lightgray;
 }
@@ -76,7 +77,7 @@
 .group-members-form-header {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.5rem;
+  padding: 1rem 0.5rem 0rem 0.5rem;
 }
 
 .add-members-form,
@@ -84,8 +85,13 @@
   padding: 0 0.5rem;
 }
 
+.friends-header {
+  margin: 2rem 0 0 0;
+}
+
 .add-new-contact-btn {
   padding: 0.5rem;
+  margin: 2rem 0;
 }
 
 .friends-list-form {

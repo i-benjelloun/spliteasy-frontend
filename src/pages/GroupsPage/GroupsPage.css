@@ -7,5 +7,10 @@
 .groups-page-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 0.5rem;
+}
+
+.groups-page {
+  padding-top: 1rem;
 }

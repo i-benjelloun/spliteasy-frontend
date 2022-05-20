@@ -26,5 +26,5 @@
 .group-form-header {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.5rem;
+  padding: 1rem 0.5rem 0rem 0.5rem;
 }
