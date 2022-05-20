@@ -72,3 +72,27 @@
 .add-new-contact-btn span {
   margin-left: 1rem;
 }
+
+.group-members-form-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
+.add-members-form,
+.friends-header {
+  padding: 0 0.5rem;
+}
+
+.add-new-contact-btn {
+  padding: 0.5rem;
+}
+
+.friends-list-form {
+  padding: 0 0.5rem;
+}
+
+.friends-list-form button {
+  width: 100%;
+  margin-top: 2rem;
+}

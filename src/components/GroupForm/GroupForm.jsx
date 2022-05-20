@@ -1,5 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { createGroup, deleteGroup, updateGroup } from '../../api/groups';
+import {
+  archiveGroup,
+  createGroup,
+  deleteGroup,
+  updateGroup,
+} from '../../api/groups';
 import GroupCategoryInput from '../GroupCategoryInput/GroupCategoryInput';
 import GroupCurrencyInput from '../GroupCurrencyInput/GroupCurrencyInput';
 // import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
@@ -15,7 +20,9 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState(
+    status === 'edit' ? group?.category : ''
+  );
   // const [members, setMembers] = useState(
   //   status === 'edit'
   //     ? group?.members
@@ -58,7 +65,7 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     if (status === 'edit') {
       const { success, errorMessage } = await updateGroup(
         group?._id.toString(),
-        { title: capitalizeFirstLetter(title) }
+        { title: capitalizeFirstLetter(title), category }
       );
       if (!success) {
         toast.error(errorMessage);
@@ -92,14 +99,30 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     }
   };
 
+  // Handle archive button
+  const handleArchiveBtn = async (e) => {
+    e.preventDefault();
+    if (window.confirm('Confirm group archiving ?')) {
+      const { success, errorMessage } = await archiveGroup(
+        group?._id.toString()
+      );
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        navigate('/groups');
+      }
+    }
+  };
+
   return (
     <div className="group-form-container">
-      <div className="full-width">
+      <div className="group-form-header">
         <h1>{status === 'create' ? 'New group' : 'Edit group'}</h1>
         <button onClick={handleCancelBtn} className="icon-btn">
           <i className="fa-solid fa-xmark fa-2x"></i>
         </button>
       </div>
+
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
         <GroupCategoryInput
@@ -121,21 +144,29 @@ const GroupForm = ({ status, setPageStatus, group }) => {
           status={status}
         /> */}
 
-        <div className="form-buttons">
-          <button className="btn save-btn" type="submit">
-            Save
-          </button>
-          {status === 'edit' && (
-            <button
-              onClick={handleDeleteBtn}
-              className="btn delete-btn"
-              type="button"
-            >
-              {'Delete'}
-            </button>
-          )}
-        </div>
+        <button className="btn save-btn" type="submit">
+          Save
+        </button>
       </form>
+
+      {status === 'edit' && (
+        <div className="archive-delete-btns">
+          <button
+            onClick={handleArchiveBtn}
+            className="btn archive-btn"
+            type="button"
+          >
+            {'Archive'}
+          </button>
+          <button
+            onClick={handleDeleteBtn}
+            className="btn delete-btn"
+            type="button"
+          >
+            {'Delete'}
+          </button>
+        </div>
+      )}
 
       <Toaster position="bottom-center" reverseOrder={false} />
     </div>

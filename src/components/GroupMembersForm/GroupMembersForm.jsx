@@ -144,7 +144,7 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
     <div className="group-members-form">
       {userInfo && (
         <>
-          <div className="full-width">
+          <div className="group-members-form-header">
             <h1>Add members</h1>
             <button
               onClick={handleCancelBtn}
@@ -221,7 +221,7 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
 
           <div>
             <h4 className="friends-header">Friends on SplitEasy</h4>
-            <form onSubmit={handleSubmitMembers}>
+            <form className="friends-list-form" onSubmit={handleSubmitMembers}>
               {friends &&
                 friends.map((friend, index) => (
                   <div className="friends-item" key={friend._id}>

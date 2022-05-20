@@ -2,7 +2,7 @@ import React from 'react';
 import { CURRENCIES } from '../../utils/consts';
 import Select from 'react-select';
 
-const GroupCurrencyInput = ({ handleCurrencyChange }) => {
+const GroupCurrencyInput = ({ handleCurrencyChange, status }) => {
   // Get currencies
   const options = CURRENCIES.map((currency) => ({
     value: currency,

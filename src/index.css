@@ -1,11 +1,15 @@
 body {
   margin: auto;
-  padding: 1rem;
+  /* padding: 0 1rem; */
   box-sizing: border-box;
   max-width: 1000px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: lightgray;
+}
+
+body > #root > div {
+  min-height: 100vh;
 }
 
 body,
@@ -40,20 +44,20 @@ label {
 }
 
 .delete-btn {
-  background-color: white;
-  color: red;
+  background-color: rgb(255, 0, 0);
+  color: white;
   border: none;
   width: 100%;
   border-radius: 4px;
   margin-top: 1rem;
 }
 .save-btn {
-  background-color: white;
-  color: blue;
+  background-color: blue;
+  color: white;
   border: none;
   width: 100%;
+  margin: 0.5rem 0;
   border-radius: 4px;
-  margin-top: 1rem;
 }
 
 .archive-btn {

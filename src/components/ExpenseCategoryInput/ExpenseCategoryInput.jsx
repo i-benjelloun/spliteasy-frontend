@@ -15,7 +15,7 @@ const ExpenseCategoryInput = ({
 
   function isDefaultCategory(option) {
     if (status === 'create') {
-      return option.value === 'Other';
+      return option.value === '';
     } else {
       return option.value === defaultValue;
     }
@@ -23,12 +23,12 @@ const ExpenseCategoryInput = ({
 
   return (
     <div className="form-label-input">
-      <label className="form-label">Category</label>
       <Select
         closeMenuOnSelect={true}
         onChange={handleCategoryChange}
         options={options}
         defaultValue={options.find(isDefaultCategory)}
+        placeholder="Category"
       />
     </div>
   );

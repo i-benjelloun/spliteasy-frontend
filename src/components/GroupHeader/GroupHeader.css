@@ -1,8 +1,12 @@
+.group-header {
+  padding: 0 0.5rem;
+}
+
 .group-header-members {
   list-style-type: none;
   display: flex;
   padding: 0;
-  margin-top: 0;
+  margin: 0;
 }
 
 .group-header-members li {
@@ -23,7 +27,7 @@
 .group-header-btns {
   display: flex;
   justify-content: center;
-  margin: 0.5rem 0;
+  gap: 0.5rem;
 }
 
 .group-title {
@@ -39,7 +43,7 @@
   background-color: gray;
   color: white;
   height: 2rem;
-  margin: 1rem 2rem 2rem 2rem;
+  margin: 2rem 2rem 2rem;
 }
 
 .nav div {
@@ -52,9 +56,9 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0 1rem;
-  margin: 1rem;
+  padding: 0 0.5rem;
   background-color: white;
+  width: 8rem;
 }
 
 .view-selected {
@@ -64,5 +68,12 @@
 
 .title-edit {
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
+}
+
+.share-add-members {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
 }

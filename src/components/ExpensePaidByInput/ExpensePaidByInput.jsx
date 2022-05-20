@@ -25,12 +25,12 @@ const ExpensePaidByInput = ({
 
   return (
     <div className="form-label-input">
-      <label className="form-label">Paid By</label>
       <Select
         closeMenuOnSelect={true}
         onChange={handlePaidByChange}
         options={options}
         defaultValue={options.find(isDefaultTitle)}
+        placeholder="Paid by"
       />
     </div>
   );

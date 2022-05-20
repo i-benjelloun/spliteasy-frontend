@@ -1,4 +1,11 @@
-.expense-header-title,
 .expense-header-amount {
   text-align: center;
+}
+
+.expense-header-title {
+  text-align: left;
+}
+
+.expense-header {
+  padding: 0 0.5rem;
 }

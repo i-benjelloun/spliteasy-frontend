@@ -63,7 +63,7 @@ const GroupsPage = () => {
       )}
       {pageStatus === 'groups' && (
         <section className="groups-page">
-          <div className="full-width">
+          <div className="groups-page-header">
             <h1>My groups</h1>
             <button className="btn btn-filter" onClick={handleArchivedFilter}>
               {archivedFilter

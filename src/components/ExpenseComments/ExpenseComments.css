@@ -1,5 +1,6 @@
 .add-expense-bar {
   display: flex;
+  padding: 0 0.5rem;
 }
 
 .add-expense-bar > div {
