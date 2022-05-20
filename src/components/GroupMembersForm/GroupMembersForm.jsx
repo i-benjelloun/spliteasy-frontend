@@ -157,7 +157,7 @@ const GroupMembersForm = ({ setPageStatus, defaultMembers }) => {
       {userInfo && (
         <>
           <div className="group-members-form-header">
-            <h1>Add members</h1>
+            <h1>Group members</h1>
             <button
               onClick={handleCancelBtn}
               type="button"
