@@ -36,6 +36,7 @@ label {
   border: none;
   border-radius: 4px;
   background-color: white;
+  color: black;
 }
 
 .delete-btn {
@@ -88,6 +89,7 @@ h1 {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  color: black;
 }
 
 .spinner {

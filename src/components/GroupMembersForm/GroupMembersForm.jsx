@@ -4,6 +4,7 @@ import { updateGroup } from '../../api/groups';
 import { getUserInfo } from '../../api/userInfo';
 import toast, { Toaster } from 'react-hot-toast';
 import './GroupMembersForm.css';
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
   const [userInfo, setUserInfo] = useState(undefined);
@@ -11,6 +12,7 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
   const [isSelected, setIsSelected] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [members, setMembers] = useState([]);
+  const [addNewContact, setAddNewContact] = useState(false);
 
   const { groupId } = useParams();
 
@@ -72,6 +74,7 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
   };
 
   const handleAddMember = (e) => {
+    e.preventDefault();
     const isPresent = addedMembers.filter((addedMember) => {
       return addedMember.email === email;
     });
@@ -82,9 +85,9 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
           ...prev,
           {
             _id: undefined,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
+            firstName: capitalizeFirstLetter(firstName.trim()),
+            lastName: capitalizeFirstLetter(lastName.trim()),
+            email: email.trim(),
           },
         ];
       });
@@ -92,6 +95,7 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
     setEmail('');
     setFirstName('');
     setLastName('');
+    setAddNewContact(false);
   };
 
   const handleDeleteMember = (email, e) => {
@@ -132,74 +136,105 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
     }
   };
 
+  const handleAddNewContact = () => {
+    setAddNewContact((prev) => !prev);
+  };
+
   return (
     <>
       {userInfo && (
         <div className="group-members-form">
-          <Toaster position="top-center" reverseOrder={false} />
+          <div className="full-width">
+            <h1>Add members</h1>
+            <button
+              onClick={handleCancelBtn}
+              type="button"
+              className="icon-btn"
+            >
+              <i className="fa-solid fa-xmark fa-2x"></i>
+            </button>
+          </div>
+
           <div className="selected-members">
             {members &&
               members?.map((member, index) => (
-                <div key={index}>
+                <div className="selected-members-item" key={index}>
+                  <div className="selected-members-item-circle">
+                    <div>
+                      <span>{member.firstName.slice(0, 1)}</span>{' '}
+                      <span>{member.lastName.slice(0, 1)}</span>{' '}
+                      <button
+                        onClick={(e) => handleDeleteMember(member.email, e)}
+                        className="icon-btn delete-member-btn"
+                        type="button"
+                      >
+                        <span className="fa fa-stack fa-1x">
+                          <i className="fa fa-solid fa-circle fa-stack-2x"></i>
+                          <i className="fa fa-solid fa-xmark fa-stack-1x fa-inverse"></i>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                   <span>{member.firstName}</span>
-                  <button
-                    onClick={(e) => handleDeleteMember(member.email, e)}
-                    className="icon-btn"
-                    type="button"
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
                 </div>
               ))}
           </div>
 
-          <button onClick={handleCancelBtn} type="button" className="icon-btn">
-            <i className="fa-solid fa-xmark fa-2x"></i>
-          </button>
-
-          <div>
-            <form>
-              <input
-                type="text"
-                placeholder="First Name"
-                onChange={handleFirstName}
-                value={firstName}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                onChange={handleLastName}
-                value={lastName}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                onChange={handleEmail}
-                value={email}
-                required
-              />
-              <button type="button" onClick={handleAddMember}>
-                Add
-              </button>
-            </form>
+          <div className="add-new-contact-btn">
+            <button onClick={handleAddNewContact} className="icon-btn">
+              <i className="fa-solid fa-user-plus fa-2x"></i>
+            </button>
+            <span>Add a new contact</span>
           </div>
 
+          {addNewContact && (
+            <div>
+              <form onSubmit={handleAddMember} className="add-members-form">
+                <input
+                  className="form-input"
+                  type="text"
+                  placeholder="First Name"
+                  onChange={handleFirstName}
+                  value={firstName}
+                  required
+                />
+                <input
+                  className="form-input"
+                  placeholder="Last Name"
+                  onChange={handleLastName}
+                  value={lastName}
+                  required
+                />
+                <input
+                  className="form-input"
+                  placeholder="Email"
+                  onChange={handleEmail}
+                  value={email}
+                  required
+                />
+                <button className="btn add-members-btn" type="submit">
+                  Add
+                </button>
+              </form>
+            </div>
+          )}
+
           <div>
+            <h4 className="friends-header">Friends on SplitEasy</h4>
             <form onSubmit={handleSubmitMembers}>
               {friends &&
                 friends.map((friend, index) => (
                   <div className="friends-item" key={friend._id}>
+                    <p>{friend.firstName}</p>
                     <input
                       type={'checkbox'}
                       checked={isSelected[index] || false}
                       onChange={(e) => handleIsSelected(index, e)}
+                      className="checkbox-round"
                     />
-                    <p>{friend.firstName}</p>
                   </div>
                 ))}
-              <button className="btn" type="submit">
+              <button className="btn save-btn" type="submit">
                 Save
               </button>
             </form>

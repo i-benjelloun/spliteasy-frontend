@@ -53,7 +53,6 @@ const GroupForm = ({ status, setPageStatus, group }) => {
         toast.error(errorMessage);
       } else {
         navigate(`/groups/${createdGroup._id.toString()}`);
-        //setPageStatus('groups');
       }
     }
     if (status === 'edit') {

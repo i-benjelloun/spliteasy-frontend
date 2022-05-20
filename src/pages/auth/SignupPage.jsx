@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import './SignupPage.css';
 import { signup } from '../../api/auth';
+import { capitalizeFirstLetter } from '../../utils/capitalizeFirstLetter';
 
 function SignupPage() {
   const [email, setEmail] = useState('');
@@ -28,7 +29,12 @@ function SignupPage() {
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    const requestBody = { email, password, firstName, lastName };
+    const requestBody = {
+      email: email.trim(),
+      password,
+      firstName: capitalizeFirstLetter(firstName.trim()),
+      lastName: capitalizeFirstLetter(lastName.trim()),
+    };
     const { isSignedUp, errorMessage } = await signup(requestBody);
 
     if (!isSignedUp) {

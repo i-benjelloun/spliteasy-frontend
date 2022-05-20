@@ -40,17 +40,17 @@ function App() {
               </IsPrivate>
             }
           />
-
+          <Route
+            path="/join/:groupId"
+            element={
+              <IsPrivate>
+                <GroupJoin />
+              </IsPrivate>
+            }
+          />
           <Route path="*" element={<Navigate to="/groups" replace />} />
         </Route>
-        <Route
-          path="/groups/:encryptedId/join"
-          element={
-            <IsPrivate>
-              <GroupJoin />
-            </IsPrivate>
-          }
-        />
+
         <Route
           path="/login"
           element={

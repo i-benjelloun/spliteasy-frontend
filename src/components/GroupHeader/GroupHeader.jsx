@@ -33,8 +33,8 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
 
   const handleShareBtn = (e) => {
     e.preventDefault();
-    const encryptedId = encryptId(group._id.toString());
-    navigator.clipboard.writeText(`localhost:3000/groups/${encryptedId}/join`);
+    //const encryptedId = encryptId(group._id.toString());
+    navigator.clipboard.writeText(group?.joinLink);
     toast.success('Link copied to clipboard');
   };
 
@@ -87,7 +87,7 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
             Share
           </button>
         )}
-        {group?.members.length === 1 && (
+        {/* {group?.members.length === 1 && (
           <button
             onClick={() => setPageStatus('members')}
             type="button"
@@ -95,7 +95,14 @@ const GroupHeader = ({ group, pageStatus, setPageStatus }) => {
           >
             Add Members
           </button>
-        )}
+        )} */}
+        <button
+          onClick={() => setPageStatus('members')}
+          type="button"
+          className="btn"
+        >
+          Add Members
+        </button>
       </div>
 
       <div className="nav">

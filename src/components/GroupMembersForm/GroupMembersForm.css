@@ -1,8 +1,74 @@
 .friends-item {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px gray solid;
 }
 
 .selected-members {
   display: flex;
   gap: 1rem;
+  margin: 1rem 0;
+}
+
+.add-members-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.add-members-btn {
+  margin-left: auto;
+  background-color: gray;
+  color: white;
+}
+
+.selected-members-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkbox-round:checked {
+  background-color: green;
+}
+
+.selected-members-item-circle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  border: 1px solid black;
+  padding: 8px;
+  background-color: lightgray;
+}
+
+.delete-member-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: -1rem;
+  margin-top: -0.5rem;
+}
+
+.fa-stack.fa-1x {
+  font-size: 0.7rem;
+}
+
+.add-new-contact-btn {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px gray solid;
+  border-top: 1px gray solid;
+  padding: 0.5rem 0;
+}
+
+.add-new-contact-btn span {
+  margin-left: 1rem;
 }
