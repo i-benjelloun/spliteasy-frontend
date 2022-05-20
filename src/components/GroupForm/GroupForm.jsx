@@ -103,8 +103,9 @@ const GroupForm = ({ status, setPageStatus, group }) => {
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
         <GroupCategoryInput
-          category={category}
+          defaultValue={group?.category}
           handleCategoryChange={handleCategoryChange}
+          status={status}
         />
 
         {status === 'create' && (

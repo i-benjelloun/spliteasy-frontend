@@ -141,9 +141,9 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
   };
 
   return (
-    <>
+    <div className="group-members-form">
       {userInfo && (
-        <div className="group-members-form">
+        <>
           <div className="full-width">
             <h1>Add members</h1>
             <button
@@ -239,9 +239,9 @@ const GroupMembersForm = ({ setPageStatus, pageStatus }) => {
               </button>
             </form>
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
