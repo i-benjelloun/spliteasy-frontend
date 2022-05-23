@@ -79,7 +79,7 @@ const GroupsPage = () => {
           )}
 
           {groups.length > 0 && (
-            <>
+            <div className="groups-list">
               {filteredGroups.map((group) => {
                 return (
                   <GroupCard
@@ -91,7 +91,7 @@ const GroupsPage = () => {
                   />
                 );
               })}
-            </>
+            </div>
           )}
 
           {!isLoading && groups.length === 0 && (
@@ -108,10 +108,7 @@ const GroupsPage = () => {
             </div>
           )}
 
-          <button
-            onClick={handleCreateBtn}
-            className="create-btn create-expense"
-          >
+          <button onClick={handleCreateBtn} className="create-btn">
             <i className="fa-solid fa-circle-plus fa-4x"></i>
           </button>
         </section>

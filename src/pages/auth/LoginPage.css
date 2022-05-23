@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin: auto 0;
+  margin: auto 1rem;
 }
 
 .app-logo-header {
@@ -24,8 +24,4 @@
 
 .to-signin {
   text-align: center;
-}
-
-.login-form {
-  padding: 0 0.5rem;
 }

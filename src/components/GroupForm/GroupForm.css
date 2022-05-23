@@ -1,8 +1,7 @@
 .group-form {
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
-  padding: 0 0.5rem;
+  margin: 1rem;
 }
 
 .form-label-input {
@@ -20,13 +19,13 @@
 
 .archive-delete-btns {
   margin-top: 3rem;
-  padding: 0 0.5rem;
 }
 
 .group-form-header {
   display: flex;
   justify-content: space-between;
   padding: 1rem 0.5rem 0rem 0.5rem;
+  color: #3e4685;
 }
 
 .group-form-members h4 {

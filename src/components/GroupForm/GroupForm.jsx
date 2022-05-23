@@ -7,7 +7,6 @@ import {
 } from '../../api/groups';
 import GroupCategoryInput from '../GroupCategoryInput/GroupCategoryInput';
 import GroupCurrencyInput from '../GroupCurrencyInput/GroupCurrencyInput';
-// import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
 import GroupTitleInput from '../GroupTitleInput/GroupTitleInput';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
@@ -153,29 +152,29 @@ const GroupForm = ({ status, setPageStatus, group }) => {
         <button className="btn save-btn" type="submit">
           Save
         </button>
-      </form>
 
-      {status === 'edit' && (
-        <div className="archive-delete-btns">
-          <button
-            onClick={handleArchiveBtn}
-            className="btn archive-btn"
-            type="button"
-          >
-            {'Archive'}
-          </button>
-
-          {group?.owner._id === user._id && (
+        {status === 'edit' && (
+          <div className="archive-delete-btns">
             <button
-              onClick={handleDeleteBtn}
-              className="btn delete-btn"
+              onClick={handleArchiveBtn}
+              className="btn archive-btn"
               type="button"
             >
-              {'Delete'}
+              {'Archive'}
             </button>
-          )}
-        </div>
-      )}
+
+            {group?.owner._id === user._id && (
+              <button
+                onClick={handleDeleteBtn}
+                className="btn delete-btn"
+                type="button"
+              >
+                {'Delete'}
+              </button>
+            )}
+          </div>
+        )}
+      </form>
 
       <Toaster position="top-center" reverseOrder={false} />
     </div>

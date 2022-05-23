@@ -45,10 +45,10 @@ const GroupReimbursementsItem = ({
         <h4>{reimbursement.owes_to.firstName}</h4>
       </div>
       <div className="testt">
-        <h4>
+        <h3>
           {getSymbolFromCurrency(currency)}
           {Math.abs(reimbursement.owed_amount)}
-        </h4>
+        </h3>
 
         {(user._id === reimbursement.user._id.toString() ||
           user._id === reimbursement.owes_to._id.toString()) && (

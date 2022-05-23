@@ -5,17 +5,16 @@
 
 .add-expense-bar > div {
   flex-basis: 100%;
-  border: 1px gray solid;
+  border: 1px lightgray solid;
   display: flex;
 }
 
 .expense-comments {
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
-.expense-comments > h4 {
+.expense-comments > h2 {
   padding: 0.5rem 0.5rem;
-  background-color: gray;
-  color: white;
+  color: #3e4685;
   margin-bottom: 1rem;
 }

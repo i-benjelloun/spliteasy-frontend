@@ -48,7 +48,7 @@ const ExpenseComments = ({ groupId, expenseId, setErrorMessage }) => {
 
   return (
     <div className="expense-comments">
-      <h4>Comments</h4>
+      <h2>Comments</h2>
       <form onSubmit={handleCommentSubmit}>
         <div className="add-expense-bar">
           <div className="form-input">
