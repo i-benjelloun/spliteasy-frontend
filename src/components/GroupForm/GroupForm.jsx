@@ -1,8 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { createGroup, deleteGroup, updateGroup } from '../../api/groups';
+import {
+  archiveGroup,
+  createGroup,
+  deleteGroup,
+  updateGroup,
+} from '../../api/groups';
 import GroupCategoryInput from '../GroupCategoryInput/GroupCategoryInput';
 import GroupCurrencyInput from '../GroupCurrencyInput/GroupCurrencyInput';
-import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
+// import GroupMembersInput from '../GroupMembersInput/GroupMembersInput';
 import GroupTitleInput from '../GroupTitleInput/GroupTitleInput';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/auth.context';
@@ -15,15 +20,8 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(status === 'edit' ? group?.title : '');
   const [currency, setCurrency] = useState('');
-  const [category, setCategory] = useState('');
-  const [members, setMembers] = useState(
-    status === 'edit'
-      ? group?.members
-          .map((member) => member.email)
-          .filter((member) => {
-            return member !== user.email;
-          })
-      : []
+  const [category, setCategory] = useState(
+    status === 'edit' ? group?.category : ''
   );
 
   const handleTitleChange = (e) => {
@@ -35,29 +33,25 @@ const GroupForm = ({ status, setPageStatus, group }) => {
   const handleCategoryChange = (e) => {
     setCategory(e.value);
   };
-  const handleMembersChange = (e) => {
-    setMembers(e.map((member) => member.value));
-  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (status === 'create') {
-      const { success, errorMessage } = await createGroup({
+      const { success, createdGroup, errorMessage } = await createGroup({
         title: capitalizeFirstLetter(title),
         currency,
         category,
-        members,
       });
       if (!success) {
         toast.error(errorMessage);
       } else {
-        setPageStatus('groups');
+        navigate(`/groups/${createdGroup._id.toString()}`);
       }
     }
     if (status === 'edit') {
       const { success, errorMessage } = await updateGroup(
         group?._id.toString(),
-        { title: capitalizeFirstLetter(title), members }
+        { title: capitalizeFirstLetter(title), category }
       );
       if (!success) {
         toast.error(errorMessage);
@@ -91,40 +85,87 @@ const GroupForm = ({ status, setPageStatus, group }) => {
     }
   };
 
+  // Handle archive button
+  const handleArchiveBtn = async (e) => {
+    e.preventDefault();
+    if (window.confirm('Confirm group archiving ?')) {
+      const { success, errorMessage } = await archiveGroup(
+        group?._id.toString()
+      );
+      if (!success) {
+        toast.error(errorMessage);
+      } else {
+        navigate('/groups');
+      }
+    }
+  };
+
+  const handleShareBtn = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(group?.joinLink);
+    toast.success('Link copied to clipboard');
+  };
+
   return (
     <div className="group-form-container">
-      <div className="full-width">
+      <div className="group-form-header">
         <h1>{status === 'create' ? 'New group' : 'Edit group'}</h1>
         <button onClick={handleCancelBtn} className="icon-btn">
           <i className="fa-solid fa-xmark fa-2x"></i>
         </button>
       </div>
+
       <form onSubmit={handleFormSubmit} className="group-form">
         <GroupTitleInput title={title} handleTitleChange={handleTitleChange} />
-
-        {status === 'create' && (
-          <>
-            <GroupCurrencyInput
-              currency={currency}
-              handleCurrencyChange={handleCurrencyChange}
-            />
-            <GroupCategoryInput
-              category={category}
-              handleCategoryChange={handleCategoryChange}
-            />
-          </>
-        )}
-
-        <GroupMembersInput
-          handleMembersChange={handleMembersChange}
-          defaultMembers={group?.members}
+        <GroupCategoryInput
+          defaultValue={group?.category}
+          handleCategoryChange={handleCategoryChange}
           status={status}
         />
-        <div className="form-buttons">
-          <button className="btn save-btn" type="submit">
-            Save
+
+        {status === 'create' && (
+          <GroupCurrencyInput
+            currency={currency}
+            handleCurrencyChange={handleCurrencyChange}
+          />
+        )}
+
+        {status === 'edit' && (
+          <div className="group-form-members">
+            <div className="share-add-members">
+              <div className="group-header-btns">
+                <button onClick={handleShareBtn} className="btn share-btn">
+                  <i className="fa-solid fa-share-from-square"></i>
+                  Share
+                </button>
+                <button
+                  onClick={() => setPageStatus('members')}
+                  type="button"
+                  className="btn share-btn"
+                >
+                  Edit members
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <button className="btn save-btn" type="submit">
+          Save
+        </button>
+      </form>
+
+      {status === 'edit' && (
+        <div className="archive-delete-btns">
+          <button
+            onClick={handleArchiveBtn}
+            className="btn archive-btn"
+            type="button"
+          >
+            {'Archive'}
           </button>
-          {status === 'edit' && (
+
+          {group?.owner._id === user._id && (
             <button
               onClick={handleDeleteBtn}
               className="btn delete-btn"
@@ -134,9 +175,9 @@ const GroupForm = ({ status, setPageStatus, group }) => {
             </button>
           )}
         </div>
-      </form>
+      )}
 
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

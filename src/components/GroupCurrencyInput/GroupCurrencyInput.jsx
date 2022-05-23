@@ -2,7 +2,7 @@ import React from 'react';
 import { CURRENCIES } from '../../utils/consts';
 import Select from 'react-select';
 
-const GroupCurrencyInput = ({ handleCurrencyChange }) => {
+const GroupCurrencyInput = ({ handleCurrencyChange, status }) => {
   // Get currencies
   const options = CURRENCIES.map((currency) => ({
     value: currency,
@@ -11,12 +11,10 @@ const GroupCurrencyInput = ({ handleCurrencyChange }) => {
 
   return (
     <div className="form-label-input">
-      <label className="form-label" htmlFor="currency">
-        Currency
-      </label>
       <Select
         closeMenuOnSelect={true}
         onChange={handleCurrencyChange}
+        placeholder={'Currency'}
         options={options}
       />
     </div>

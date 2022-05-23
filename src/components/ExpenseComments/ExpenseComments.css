@@ -1,5 +1,6 @@
 .add-expense-bar {
   display: flex;
+  padding: 0 0.5rem;
 }
 
 .add-expense-bar > div {
@@ -10,4 +11,11 @@
 
 .expense-comments {
   margin-top: 3rem;
+}
+
+.expense-comments > h4 {
+  padding: 0.5rem 0.5rem;
+  background-color: gray;
+  color: white;
+  margin-bottom: 1rem;
 }

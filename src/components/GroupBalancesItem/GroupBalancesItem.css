@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px black solid;
+  border-bottom: 1px grey solid;
+  padding: 0 0.5rem;
 }
 
 .group-balances-item * {

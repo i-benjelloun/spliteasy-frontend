@@ -1,5 +1,6 @@
 .expense-card {
-  border-bottom: 1px black solid;
+  border-bottom: 1px gray solid;
+  padding: 0 0.5rem;
 }
 
 .expense-card-subdiv {

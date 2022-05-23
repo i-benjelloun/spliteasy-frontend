@@ -21,9 +21,11 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
   const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(status === 'edit' ? expense?.title : '');
   const [paid_by, setPaidBy] = useState(user._id);
-  const [category, setCategory] = useState('Other');
+  const [category, setCategory] = useState(
+    status === 'edit' ? expense?.category : ''
+  );
   const [expense_amount, setExpenseAmount] = useState(
-    status === 'edit' ? expense?.expense_amount : 0
+    status === 'edit' ? expense?.expense_amount : ''
   );
   const [shares, setShares] = useState([]);
   const [date, setDate] = useState(
@@ -132,7 +134,7 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
 
   return (
     <div className="group-form-container">
-      <div className="full-width">
+      <div className="group-form-header">
         <h1>{status === 'create' ? 'New expense' : 'Edit expense'}</h1>
         <button onClick={handleCancelBtn} className="icon-btn">
           <i className="fa-solid fa-xmark fa-2x"></i>
@@ -193,7 +195,7 @@ const ExpenseForm = ({ group, expense, status, setPageStatus }) => {
           )}
         </div>
       </form>
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

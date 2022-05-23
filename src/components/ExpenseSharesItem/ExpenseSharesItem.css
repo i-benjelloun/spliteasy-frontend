@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  border-bottom: 1px black solid;
+  border-bottom: 1px gray solid;
+  padding: 0 0.5rem;
 }
 
 .expense-shares-item * {

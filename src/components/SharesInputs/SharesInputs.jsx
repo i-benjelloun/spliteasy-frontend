@@ -55,7 +55,7 @@ const SharesInputs = ({ members, expense_amount, setShares, currency }) => {
 
   return (
     <div>
-      <p>Shares</p>
+      <h4>Split with</h4>
       <div className="full-width" id="split-options">
         <button
           onClick={handleSplitMethodChange}

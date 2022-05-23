@@ -1,11 +1,8 @@
 .group-reimbursements-item {
   display: flex;
   justify-content: space-between;
-  /* border: 1px black solid; */
   margin: 0.5rem 0;
   padding: 0 0.5rem;
-
-  border-radius: 5px;
   background: #d3d3d3;
   box-shadow: 5px 5px 37px #818181, -5px -5px 37px #ffffff;
 }

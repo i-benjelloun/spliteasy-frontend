@@ -4,23 +4,21 @@ import { joinGroup } from '../../api/groups';
 
 const GroupJoin = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(undefined);
-  const { encryptedId } = useParams();
+  const { groupId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
-      const { success, groupId, errorMessage } = await joinGroup(encryptedId);
+      const { success } = await joinGroup(groupId);
       setIsLoading(false);
       if (success) {
-        navigate(`/groups/${groupId}`);
+        navigate(`/groups/${groupId}`, { replace: true });
       } else {
-        setErrorMessage(errorMessage);
         navigate(`/groups`);
       }
     };
     getData();
-  }, [encryptedId]);
+  }, [groupId]);
 
   return (
     <div className="group-join">

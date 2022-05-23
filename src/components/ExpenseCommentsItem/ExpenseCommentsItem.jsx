@@ -44,7 +44,7 @@ const ExpenseCommentsItem = ({ comment, groupId, expenseId, setComments }) => {
       <button onClick={handleDeleteComment} className="icon-btn" type="button">
         <i className="fa-solid fa-trash"></i>
       </button>
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

@@ -58,6 +58,14 @@ const SharesInputsItem = ({
     }
   };
 
+  function validateShareAmount(e) {
+    if (Number(e.target.value) <= 0) {
+      e.target.setCustomValidity('Please enter an amount greater than 0');
+    } else {
+      e.target.setCustomValidity('');
+    }
+  }
+
   return (
     <div className="shares-inputs-item">
       <div className="shares-input-field">
@@ -88,6 +96,7 @@ const SharesInputsItem = ({
           step="0.01"
           value={shareAmount || 0}
           onChange={handleChangeAmount}
+          onKeyUp={validateShareAmount}
           disabled={splitMethod !== 'manually'}
           required
         />

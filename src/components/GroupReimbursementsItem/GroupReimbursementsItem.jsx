@@ -57,7 +57,7 @@ const GroupReimbursementsItem = ({
           </button>
         )}
       </div>
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };

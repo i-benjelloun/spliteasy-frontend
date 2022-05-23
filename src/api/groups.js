@@ -73,6 +73,7 @@ const createGroup = async (body) => {
     if (createdGroup) {
       return {
         success: true,
+        createdGroup: createdGroup,
       };
     }
   } catch (err) {
@@ -163,10 +164,10 @@ const getGroupBalances = async (groupId) => {
 };
 
 // Join Group
-const joinGroup = async (encryptedId) => {
+const joinGroup = async (groupId) => {
   const config = {
     method: 'patch',
-    url: `/groups/${encryptedId}/join`,
+    url: `/join/${groupId}`,
     headers: getHeadersWithAuth(),
   };
   try {
@@ -177,13 +178,11 @@ const joinGroup = async (encryptedId) => {
     if (updatedGroup) {
       return {
         success: true,
-        groupId: updatedGroup._id,
       };
     }
   } catch (err) {
     return {
       success: false,
-      errorMessage: err?.response?.data?.errorMessage,
     };
   }
 };

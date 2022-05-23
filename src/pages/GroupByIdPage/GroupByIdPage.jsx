@@ -6,6 +6,7 @@ import ExpensesList from '../../components/ExpensesList/ExpensesList';
 import GroupBalances from '../../components/GroupBalances/GroupBalances';
 import GroupForm from '../../components/GroupForm/GroupForm';
 import GroupHeader from '../../components/GroupHeader/GroupHeader';
+import GroupMembersForm from '../../components/GroupMembersForm/GroupMembersForm';
 import './GroupByIdPage.css';
 
 const GroupByIdPage = () => {
@@ -54,6 +55,14 @@ const GroupByIdPage = () => {
               group={group}
               pageStatus={pageStatus}
               setPageStatus={setPageStatus}
+            />
+          )}
+
+          {pageStatus === 'members' && (
+            <GroupMembersForm
+              defaultMembers={group?.members}
+              setPageStatus={setPageStatus}
+              pageStatus={pageStatus}
             />
           )}
 
