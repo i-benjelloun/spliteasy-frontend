@@ -1,6 +1,5 @@
-.expense-shares-list > h4 {
+.expense-shares-list > h2 {
   padding: 0.5rem 0.5rem;
-  background-color: gray;
-  color: white;
-  margin-bottom: 0;
+  color: #3e4685;
+  margin: 0.5rem 0 0 0;
 }

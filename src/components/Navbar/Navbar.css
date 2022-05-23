@@ -3,9 +3,7 @@
   height: 2rem;
   justify-content: space-between;
   align-items: center;
-  /* margin: 1rem 0 2rem 0; */
   padding: 1rem 0.5rem;
-  border-bottom: 2px black solid;
 }
 
 .logout-btn {
@@ -18,5 +16,7 @@
 
 .app-logo {
   font-family: 'Oleo Script Swash Caps', cursive;
+  font-size: 3rem;
   justify-self: center;
+  color: #3e4685;
 }

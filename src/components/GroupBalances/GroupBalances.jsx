@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getGroupBalances } from '../../api/groups';
 import GroupBalancesList from '../GroupBalancesList/GroupBalancesList';
 import GroupReimbursementsList from '../GroupReimbursementsList/GroupReimbursementsList';
+import './GroupBalances.css';
 
 const GroupBalances = ({ currency, setPageStatus, setErrorMessage }) => {
   const { groupId } = useParams();

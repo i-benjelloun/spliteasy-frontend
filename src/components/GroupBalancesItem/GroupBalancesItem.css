@@ -2,12 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px grey solid;
-  padding: 0 0.5rem;
+  border-bottom: 1px lightgray solid;
+  padding: 0.5rem;
+  margin: 0.5rem 1rem;
 }
 
 .group-balances-item * {
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .group-member-balance {

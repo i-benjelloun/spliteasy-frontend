@@ -51,7 +51,7 @@ function SignupPage() {
         <h2>Sign up</h2>
       </div>
 
-      <form onSubmit={handleSignupSubmit}>
+      <form className="signup-form" onSubmit={handleSignupSubmit}>
         <div className="form-label-input">
           <input
             className="form-input"

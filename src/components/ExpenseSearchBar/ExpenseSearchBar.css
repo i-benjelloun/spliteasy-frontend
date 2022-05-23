@@ -1,11 +1,12 @@
 .expense-search-bar {
   display: flex;
-  margin: 0 0.5rem 2rem 0.5rem;
+  margin: 1rem;
 }
 
 .expense-search-bar > div {
   flex-basis: 100%;
-  border: 1px gray solid;
+  border: 1px lightgray solid;
+  background-color: white;
   display: flex;
   align-items: center;
 }
